@@ -9,9 +9,9 @@ class RouterComp extends Component {
             <Router>
             <Stack key="root" hideNavBar >
                 <Stack key="auth"  >
-                    <Scene hideNavBar  key="login" component={SignIn} title="" />
+                    <Scene initial hideNavBar  key="login" component={SignIn} title="" />
                     <Scene hideNavBar key="signUp" component={SignUp} title="Register" />
-                    <Scene initial key="anasayfa" component={index} title="E-TİCARET" />
+                    <Scene  key="anasayfa" component={index} title="E-TİCARET" />
                     {/* <Scene key="home" component={Home} /> */}
                     {/* <Scene
                         initial

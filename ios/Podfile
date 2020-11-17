@@ -8,9 +8,10 @@ target 'eCommerceApp' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
-
-  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+  pod 'FBSDKCoreKit'
+  pod 'GoogleSignIn', '~> 5.0.2'
+  pod 'FBSDKLoginKit'
+  # pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
   target 'eCommerceAppTests' do
     inherit! :complete

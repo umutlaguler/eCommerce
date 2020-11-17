@@ -7,6 +7,10 @@ import LottieView from 'lottie-react-native';
 import { Animated, Easing } from 'react-native';
 import { fullNameChange,emailChange, passwordChange ,signUpClicked} from '../../actions/authenticationAction';
 // import AsyncStorage from '@react-native-community/async-storage';
+import {GoogleSignin,GoogleSigninButton,statusCodes,
+} from '@react-native-community/google-signin';
+
+GoogleSignin.configure();
 
 class signUp extends Component {
   
@@ -19,9 +23,28 @@ class signUp extends Component {
     }
   }
 
+  
     onFullNameChanged = (value) => this.props.fullNameChange(value)
     onEmailChanged    = (value) => this.props.emailChange(value)
     onPasswordChanged = (value) => this.props.passwordChange(value)
+
+    signIn = async () => {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        this.setState({ userInfo });
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled the login flow
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          // operation (e.g. sign in) is in progress already
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          // play services not available or outdated
+        } else {
+          // some other error happened
+        }
+      }
+    };
     
  
     render() {
@@ -60,7 +83,7 @@ class signUp extends Component {
             </View>      
                 <View style={styles.greyLine}></View>
                 <TouchableOpacity
-                onPress={this.onSignUp}
+                onPress={this.signIn}
                 style={styles.googleSignInBtn}>
               <Text style={styles.googleSignInButtonText}>Google</Text>
             </TouchableOpacity>
