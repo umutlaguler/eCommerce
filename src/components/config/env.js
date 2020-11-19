@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Dimensions, TouchableOpacity, TextInput, StyleSheet, Text, PixelRatio, Image, ActivityIndicator } from 'react-native';
 
 
-export const API_BASE    = "http://pxralert.ozdemircibaris.xyz/api/v1"
+
 // export const API_BASE    = "htktp://localhost:5002/api/v1"
+
 
 export const PhoneHeight = Dimensions.get("window").height;
 export const PhoneWidth  = Dimensions.get("window").width;

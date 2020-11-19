@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView ,Dimensions} from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView ,Dimensions,ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
+const logo = {
+  uri: 'https://reactnative.dev/img/tiny_logo.png',
+  width: 64,
+  height: 64
+};
 
 
 
 const data = [
-    { id: "1", title: "bu bir kampanya", backgroundColor: 'red' },
-    { id: "2", title: "bu bir kampanya", backgroundColor: 'green' },
-    { id: "3", title: "bu bir kampanya", backgroundColor: 'blue' },
-    { id: "4", title: "bu bir kampanya", backgroundColor: 'pink' },
-    { id: "5", title: "bu bir kampanya", backgroundColor: 'aqua' },
+    { id: "1", title: "bu bir kampanya", backgroundColor: '#fefddb' },
+    { id: "2", title: "bu bir kampanya", backgroundColor: '#fbe8e7' },
+    { id: "3", title: "bu bir kampanya", backgroundColor: '##f2e5fd' },
+    { id: "4", title: "bu bir kampanya", backgroundColor: '#dff3fe' },
+    { id: "5", title: "bu bir kampanya", backgroundColor: '#f2e5fd' },
   ]
 
 const PhoneWidth  = Dimensions.get("window").width;
 const PhoneHeight = Dimensions.get("window").height;
 
 export default class index extends Component {
+  
     cardRenderItem = ({ item }) => {
       return (
         <TouchableOpacity style = {styles.seperateCards}>
@@ -33,7 +39,10 @@ export default class index extends Component {
         
     <View style={styles.container}>
               
-            <TouchableOpacity style={styles.adressBtn}>
+            <TouchableOpacity 
+            style={styles.adressBtn}
+            onPress={() => Actions.addresses()}
+            >
             <Text style={styles.textAdress}>
                     ProjectXR Yenikent Sabuncu Sitesi Döşeme 
                 </Text>
@@ -79,15 +88,51 @@ export default class index extends Component {
             </TouchableOpacity>
         </View>
         <Text style={{color:'grey', margin:4.5}}>Kategoriler</Text>
-            
-                <FlatList style={styles.scrollCats} >
-                <TouchableOpacity style={{height:5,width:5}}>
-                <Text >KAT</Text>
-                </TouchableOpacity>
-                </FlatList>
-          
-
-           
+        <ScrollView>
+    <Text style={{ fontSize: 25 }}>et</Text>
+   <View style={styles.catdeneme}>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   
+   
+    </View>
+    <Text style={{ fontSize: 25 }}>su</Text>
+    <View style={styles.catdeneme}>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   
+    </View>
+    <Text style={{ fontSize: 25 }}>Bebek & Bakım</Text>
+    <View style={styles.catdeneme}>
+   
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+    </View>
+    <Text style={{ fontSize: 25 }}>Giyim</Text>
+    <View style={styles.catdeneme}>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   
+    </View>
+    <Text style={{ fontSize: 25 }}>İçecek</Text>
+    <View style={styles.catdeneme}>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
+   
+    </View>
+   
+  </ScrollView>  
+               
      </View>
                 
       )
@@ -98,6 +143,13 @@ export default class index extends Component {
     container: {
       flex: 1,
      
+    },
+    catdeneme:{
+      flexWrap: 'wrap',
+      flexDirection:'row',
+      justifyContent:'space-between',
+      padding:'4%',
+      alignItems:'flex-start'
     },
     adressBtn:{
       alignSelf:'center',
@@ -137,12 +189,13 @@ export default class index extends Component {
         borderBottomWidth:1,
         borderLeftWidth:1,
         borderRightWidth:1,
-        borderRadius:20
+        borderBottomLeftRadius:30,
+        borderBottomRightRadius:30
     },
     opportunityBtn:{
         height: PhoneHeight * 0.1,
         width: PhoneWidth * 0.26,
-        backgroundColor:'pink',
+        backgroundColor:'yellow',
         borderRadius:14,
         alignItems:'center',
         flexDirection:'row',
@@ -151,16 +204,15 @@ export default class index extends Component {
     favouriteBtn:{
         height: PhoneHeight * 0.1,
         width: PhoneWidth * 0.26,
-        backgroundColor:'blue',
+        backgroundColor:'red',
         borderRadius:14,
         alignItems:'center',
         flexDirection:'row',
-       
     },
     newProductsBtn:{
         height: PhoneHeight * 0.1,
         width: PhoneWidth * 0.26,
-        backgroundColor:'red',
+        backgroundColor:'green',
         borderRadius:14,
         alignItems:'center',
         flexDirection:'row',
@@ -171,12 +223,7 @@ export default class index extends Component {
       backgroundColor:'blue'
      
     },
-    scrollCats:{
-      height: PhoneHeight * 0.6,
-      width: PhoneWidth * 1,
-      borderWidth:2
-
-    },
+    
     mainButtons:{
         flexDirection:'row',
         justifyContent:'space-around',
