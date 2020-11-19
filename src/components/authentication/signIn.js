@@ -3,6 +3,7 @@ import {Text,TouchableOpacity,TextInput,View ,StyleSheet,Image,key} from 'react-
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { PhoneHeight,PhoneWidth,responsiveSize } from '../config/env';
+import { LoginButton, AccessToken,LoginManager} from 'react-native-fbsdk';
 import LottieView from 'lottie-react-native';
 import { Animated, Easing } from 'react-native';
 import { fullNameChange,emailChange, passwordChange ,signUpClicked} from '../../actions/authenticationAction';
@@ -13,6 +14,7 @@ import {GoogleSignin,GoogleSigninButton,statusCodes,
 GoogleSignin.configure();
 
 class signUp extends Component {
+  
   
   constructor(props) {
     super(props);
@@ -48,6 +50,21 @@ class signUp extends Component {
     
  
     render() {
+      LoginManager.logInWithPermissions(["public_profile"]).then(
+        function(result) {
+          if (result.isCancelled) {
+            console.log("Login cancelled");
+          } else {
+            console.log(
+              "Login success with permissions: " +
+                result.grantedPermissions.toString()
+            );
+          }
+        },
+        function(error) {
+          console.log("Login fail with error: " + error);
+        }
+      );  x
         return (
           <View style={styles.background}>
             <View style={styles.container}>
@@ -87,11 +104,31 @@ class signUp extends Component {
                 style={styles.googleSignInBtn}>
               <Text style={styles.googleSignInButtonText}>Google</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            <View>
+        <LoginButton
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                console.log("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                console.log("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    console.log(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => console.log("logout.")}
+          />
+      </View>
+            {/* <TouchableOpacity
                 onPress={this.onSignUp}
                 style={styles.facebookSignInBtn}>
               <Text style={styles.facebookSignInBtnText}>Facebook</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
                
             </View>
            

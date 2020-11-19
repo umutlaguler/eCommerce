@@ -17,20 +17,20 @@ class RouterComp extends Component {
         
          return (
             <Router>
-            <Stack key="root" hideNavBar >
+            <Stack initial key="root" hideNavBar >
                 <Stack key="auth"  >
-                    <Scene hideNavBar key="login" component={SignIn} title="" />
+                    <Scene initial hideNavBar key="login" component={SignIn} title="" />
                     <Scene hideNavBar key="signUp" component={SignUp} title="Register" />
                     
                 </Stack>
-            <Stack initial navigationBarStyle={styles.navigationBar} key="main">
+            <Stack  navigationBarStyle={styles.navigationBar} key="main">
                             
             <Tabs
                             hideNavBar
                             showLabel={false}
                             tabBarStyle={styles.tabs}>
                             <Scene 
-                            initial key="anasayfa"
+                             key="anasayfa"
                             component={index} 
                             title="E-TİCARET"
                             icon={({focused}) => (
