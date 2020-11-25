@@ -10,6 +10,9 @@ import search from './components/pages/search';
 import others from './components/pages/others';
 import campaign from './components/pages/campaign';
 import addresses from './components/pages/addresses';
+import favourites from './components/pages/favourites';
+import newProducts from './components/pages/newProducts';
+import opportunity from './components/pages/opportunity';
 // import { PhoneWidth } from './components/config/env';
 
 class RouterComp extends Component {
@@ -17,25 +20,25 @@ class RouterComp extends Component {
         
          return (
             <Router>
-            <Stack initial key="root" hideNavBar >
+            <Stack key="root" hideNavBar >
                 <Stack key="auth"  >
-                    <Scene initial hideNavBar key="login" component={SignIn} title="" />
+                    <Scene hideNavBar key="login" component={SignIn} title="" />
                     <Scene hideNavBar key="signUp" component={SignUp} title="Register" />
                     
                 </Stack>
-            <Stack  navigationBarStyle={styles.navigationBar} key="main">
+            <Stack  initial navigationBarStyle={styles.navigationBar} key="main">
                             
             <Tabs
                             hideNavBar
                             showLabel={false}
                             tabBarStyle={styles.tabs}>
-                            <Scene 
-                             key="anasayfa"
-                            component={index} 
-                            title="E-TİCARET"
-                            icon={({focused}) => (
-                            <Image style={styles.tabIcon} source={focused ? require('./images/homepage.png'):require('./images/homepage.png')} />)} />
-                            
+                            <Scene
+                                initial
+                                key="anasayfa"
+                                component={index} 
+                                title="E-TİCARET"
+                                icon={({focused}) => (
+                                <Image style={styles.tabIcon} source={focused ? require('./images/homepage.png'):require('./images/homepage.png')} />)} />
                             <Scene
                                 key="diet"
                                 title="ARAMA"
@@ -67,6 +70,24 @@ class RouterComp extends Component {
                                 // icon={({focused}) => (
                                 // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
                                 component={addresses} />
+                            <Scene
+                                key="favourites"
+                                title="FAVORİLERİM"
+                                // icon={({focused}) => (
+                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
+                                component={favourites} />
+                            <Scene
+                                key="newProducts"
+                                title="NEW PRODUCTS"
+                                // icon={({focused}) => (
+                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
+                                component={newProducts} /> 
+                            <Scene
+                                key="opportunity"
+                                title="FIRSAT ÜRÜNLERİ"
+                                // icon={({focused}) => (
+                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
+                                component={opportunity} />            
                                 
                             
                         </Tabs>
@@ -82,21 +103,16 @@ class RouterComp extends Component {
         borderBottomColor: '#fff'
     },
     tabs: {
-        borderTopWidth: 1,
+        borderTopWidth: 2,
         borderTopColor: '#dfdfdf',
         zIndex: 1,
+        
     },
     tabIcon: {
-        width: responsiveSize(17),
-        height: responsiveSize(17),
+        width: responsiveSize(19),
+        height: responsiveSize(19),
     },
-    appIcon: {
-        width: PhoneHeight > 568 ? responsiveSize(33.5):responsiveSize(33.5),
-        height: PhoneHeight > 568 ? responsiveSize(33.5):responsiveSize(33.5),
-        backgroundColor: '#fff',
-        marginBottom: PhoneHeight <= 568 ? responsiveSize(10):null,
-        zIndex: 99,
-    },
+    
     
    
 })

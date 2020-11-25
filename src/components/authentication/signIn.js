@@ -30,7 +30,7 @@ class signUp extends Component {
     onEmailChanged    = (value) => this.props.emailChange(value)
     onPasswordChanged = (value) => this.props.passwordChange(value)
 
-    signIn = async () => {
+    signInWithGoogle = async () => {
       try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
@@ -47,9 +47,8 @@ class signUp extends Component {
         }
       }
     };
-    
- 
-    render() {
+
+    signInWithFacebook = () =>{
       LoginManager.logInWithPermissions(["public_profile"]).then(
         function(result) {
           if (result.isCancelled) {
@@ -64,7 +63,14 @@ class signUp extends Component {
         function(error) {
           console.log("Login fail with error: " + error);
         }
-      );  x
+      );
+      
+    }
+    
+    
+ 
+    render() {
+      
         return (
           <View style={styles.background}>
             <View style={styles.container}>
@@ -72,7 +78,6 @@ class signUp extends Component {
               style={styles.logoImage}
               source={require('../../images/newLogo.png')}
             />
-  
              <TextInput 
                 style={styles.input}
                 placeholder='E-mail'
@@ -85,7 +90,6 @@ class signUp extends Component {
                 placeholderTextColor='#545454'
                 onChangeText={(value) => this.props.emailChange(value)}
                 />
-      
             <TouchableOpacity
                 onPress={this.onSignUp}
                 style={styles.signInButton}>
@@ -100,12 +104,14 @@ class signUp extends Component {
             </View>      
                 <View style={styles.greyLine}></View>
                 <TouchableOpacity
-                onPress={this.signIn}
+                onPress={this.signInWithGoogle}
                 style={styles.googleSignInBtn}>
               <Text style={styles.googleSignInButtonText}>Google</Text>
             </TouchableOpacity>
             <View>
         <LoginButton
+          style={styles.facebookBtn}
+          onPress={this.signInWithFacebook}
           onLoginFinished={
             (error, result) => {
               if (error) {
@@ -115,6 +121,7 @@ class signUp extends Component {
               } else {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
+                    console.log(data);
                     console.log(data.accessToken.toString())
                   }
                 )
@@ -194,6 +201,7 @@ const styles = StyleSheet.create({
     googleSignInButtonText:{
       color: "red",
     },
+    
     facebookSignInBtnText:{
       color:'white'
     },

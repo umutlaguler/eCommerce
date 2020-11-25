@@ -12,12 +12,20 @@ const logo = {
 
 
 const data = [
-    { id: "1", title: "bu bir kampanya", backgroundColor: '#fefddb' },
+    { id: "1", title: "bu bir kampanya", backgroundColor: '#fefddb',uri: 'https://reactnative.dev/img/tiny_logo.png' },
     { id: "2", title: "bu bir kampanya", backgroundColor: '#fbe8e7' },
     { id: "3", title: "bu bir kampanya", backgroundColor: '##f2e5fd' },
     { id: "4", title: "bu bir kampanya", backgroundColor: '#dff3fe' },
     { id: "5", title: "bu bir kampanya", backgroundColor: '#f2e5fd' },
   ]
+const cat_data = [
+  { id: "1", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "2", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "3", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "4", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+]
+
+
 
 const PhoneWidth  = Dimensions.get("window").width;
 const PhoneHeight = Dimensions.get("window").height;
@@ -34,6 +42,8 @@ export default class index extends Component {
         
       )
     }
+    
+
     render() {
       return (
         
@@ -54,8 +64,7 @@ export default class index extends Component {
             <View style = {styles.shopInfos}>
 
             </View>
-        
-
+    
         <View style={styles.allCards}>
            <FlatList style={styles.allCards}
             keyExtractor={(item) => item.id}
@@ -77,62 +86,33 @@ export default class index extends Component {
             renderItem={this.cardRenderItem} />
             </View>
         <View style={styles.mainButtons}>
-            <TouchableOpacity style={styles.opportunityBtn}>
+            <TouchableOpacity 
+            onPress={() => Actions.opportunity()}
+            style={styles.opportunityBtn}>
                 <Text >fırsat</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.favouriteBtn}>
+            <TouchableOpacity 
+            onPress={() => Actions.favourites()}
+            style={styles.favouriteBtn}>
                 <Text>favori</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.newProductsBtn}>
+            <TouchableOpacity 
+            onPress={() => Actions.newProducts()}
+            style={styles.newProductsBtn}>
                 <Text>yeni</Text>
             </TouchableOpacity>
         </View>
         <Text style={{color:'grey', margin:4.5}}>Kategoriler</Text>
-        <ScrollView>
-    <Text style={{ fontSize: 25 }}>et</Text>
-   <View style={styles.catdeneme}>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   
-   
-    </View>
-    <Text style={{ fontSize: 25 }}>su</Text>
-    <View style={styles.catdeneme}>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   
-    </View>
-    <Text style={{ fontSize: 25 }}>Bebek & Bakım</Text>
-    <View style={styles.catdeneme}>
-   
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-    </View>
-    <Text style={{ fontSize: 25 }}>Giyim</Text>
-    <View style={styles.catdeneme}>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   
-    </View>
-    <Text style={{ fontSize: 25 }}>İçecek</Text>
-    <View style={styles.catdeneme}>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   <TouchableOpacity><Image source={logo} /></TouchableOpacity>
-   
-    </View>
-   
-  </ScrollView>  
-               
+
+        <FlatList style={styles.categories}
+            keyExtractor={(item) => item.id}
+            data={cat_data}
+            style={{ maxHeight: PhoneHeight * 0.23 }}
+            bounces={false}
+            snapToAlignment={"center"}
+            decelerationRate={0}
+            showsHorizontalScrollIndicator={false}
+            renderItem={this.catRenderItem} />
      </View>
                 
       )
@@ -158,7 +138,7 @@ export default class index extends Component {
       borderWidth:0,
       flexDirection:'row',
       backgroundColor:'#f6f8fa'
-    //   alignItems:'center'
+    //alignItems:'center'
     },
     allCards:{
         height: PhoneHeight * 0.7,
@@ -233,7 +213,7 @@ export default class index extends Component {
         marginTop:'-99%',
         paddingHorizontal:10,        
     },
-    listOfCategories:{
-       
+    categories:{
+       borderWidth:2
     }
   })
