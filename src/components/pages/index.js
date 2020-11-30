@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView ,Dimensions,ScrollView} from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView ,Dimensions,ScrollView, ImageBackground} from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
@@ -23,12 +23,21 @@ const cat_data = [
   { id: "2", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
   { id: "3", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
   { id: "4", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "5", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "6", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "6", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "6", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "7", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "8", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  { id: "9", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
+  
 ]
 
 
 
 const PhoneWidth  = Dimensions.get("window").width;
 const PhoneHeight = Dimensions.get("window").height;
+const numColumns = 4;
 
 export default class index extends Component {
   
@@ -40,6 +49,18 @@ export default class index extends Component {
         </View>
         </TouchableOpacity>
         
+      )
+    }
+    catRenderItem = ({ item }) => {
+      return (
+<View style = {styles.allCategories}>
+        <TouchableOpacity style = {styles.seperateCategoriesBtn}>
+        <View style={[styles.catWrapper, { backgroundColor: item.backgroundColor }]}>
+      {/* <ImageBackground style={{width: '2%', height: '2%'}}>{item.uri}</ImageBackground> */}
+          <Text style={styles.catTitle}> {item.title} </Text>
+        </View>
+        </TouchableOpacity>
+</View>
       )
     }
     
@@ -103,16 +124,14 @@ export default class index extends Component {
             </TouchableOpacity>
         </View>
         <Text style={{color:'grey', margin:4.5}}>Kategoriler</Text>
-
-        <FlatList style={styles.categories}
-            keyExtractor={(item) => item.id}
-            data={cat_data}
-            style={{ maxHeight: PhoneHeight * 0.23 }}
-            bounces={false}
-            snapToAlignment={"center"}
-            decelerationRate={0}
-            showsHorizontalScrollIndicator={false}
-            renderItem={this.catRenderItem} />
+            <View style = {styles.allCategories}>
+                <FlatList style = {styles.listingCategories}
+                keyExtractor={(item) => item.id}
+                data={cat_data}  
+                pagingEnabled
+                numColumns = {numColumns}
+                renderItem={this.catRenderItem}/>
+            </View>
      </View>
                 
       )
@@ -122,14 +141,6 @@ export default class index extends Component {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-     
-    },
-    catdeneme:{
-      flexWrap: 'wrap',
-      flexDirection:'row',
-      justifyContent:'space-between',
-      padding:'4%',
-      alignItems:'flex-start'
     },
     adressBtn:{
       alignSelf:'center',
@@ -138,21 +149,22 @@ export default class index extends Component {
       borderWidth:0,
       flexDirection:'row',
       backgroundColor:'#f6f8fa'
-    //alignItems:'center'
+
     },
     allCards:{
-        height: PhoneHeight * 0.7,
+      width:PhoneWidth * 1,
+      height: PhoneHeight * 0.7,
     },
     arrowDown:{
-        height: PhoneHeight * 0.05,
-        width: PhoneWidth * 0.06,
-        marginLeft:'20%',
-        marginTop:'-2%'         
+      height: PhoneHeight * 0.05,
+      width: PhoneWidth * 0.06,
+      marginLeft:'20%',
+      marginTop:'-2%'         
     },
     textAdress:{
-        marginTop:'2%'
+      marginTop:'2%'
     },
-    cardWrapper: {
+    cardWrapper:{
       width: PhoneWidth - 80, // default -80
       margin: 10,
       height: PhoneHeight * 0.22,
@@ -164,56 +176,66 @@ export default class index extends Component {
       fontSize: 20
     },
     shopInfos:{
-        height: PhoneHeight * 0.1,
-        width: PhoneWidth * 1,
-        borderBottomWidth:1,
-        borderLeftWidth:1,
-        borderRightWidth:1,
-        borderBottomLeftRadius:30,
-        borderBottomRightRadius:30
+      height: PhoneHeight * 0.1,
+      width: PhoneWidth * 1,
+      borderBottomWidth:1,
+      borderLeftWidth:1,
+      borderRightWidth:1,
+      borderBottomLeftRadius:30,
+      borderBottomRightRadius:30
     },
     opportunityBtn:{
-        height: PhoneHeight * 0.1,
-        width: PhoneWidth * 0.26,
-        backgroundColor:'yellow',
-        borderRadius:14,
-        alignItems:'center',
-        flexDirection:'row',
-
-    },
-    favouriteBtn:{
-        height: PhoneHeight * 0.1,
-        width: PhoneWidth * 0.26,
-        backgroundColor:'red',
-        borderRadius:14,
-        alignItems:'center',
-        flexDirection:'row',
-    },
-    newProductsBtn:{
-        height: PhoneHeight * 0.1,
-        width: PhoneWidth * 0.26,
-        backgroundColor:'green',
-        borderRadius:14,
-        alignItems:'center',
-        flexDirection:'row',
-    },
-    catBtn:{
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.26,
-      backgroundColor:'blue'
+      backgroundColor:'yellow',
+      borderRadius:14,
+      alignItems:'center',
+      flexDirection:'row',
+    },
+    favouriteBtn:{
+      height: PhoneHeight * 0.1,
+      width: PhoneWidth * 0.26,
+      backgroundColor:'red',
+      borderRadius:14,
+      alignItems:'center',
+      flexDirection:'row',
+    },
+    newProductsBtn:{
+      height: PhoneHeight * 0.1,
+      width: PhoneWidth * 0.26,
+      backgroundColor:'green',
+      borderRadius:14,
+      alignItems:'center',
+      flexDirection:'row',
+    },
+    mainButtons:{
+      flexDirection:'row',
+      justifyContent:'space-around',
+      height: PhoneHeight * 0.1,
+      width: PhoneWidth * 1,
+      alignSelf:'center',
+      marginTop:'-99%',
+      paddingHorizontal:10,        
+    },
+    allCategories:{     
+      paddingHorizontal:2,
+      borderRadius:15,
+      alignSelf:'center'
+    },
+    listingCategories:{
+     
+      
      
     },
-    
-    mainButtons:{
-        flexDirection:'row',
-        justifyContent:'space-around',
-        height: PhoneHeight * 0.1,
-        width: PhoneWidth * 1,
-        alignSelf:'center',
-        marginTop:'-99%',
-        paddingHorizontal:10,        
-    },
-    categories:{
-       borderWidth:2
+    seperateCategoriesBtn:{
+      backgroundColor:'grey',
+      padding:5,
+      marginVertical:3,
+      height: PhoneHeight * 0.1,
+      width: PhoneWidth * 0.21,
+      borderRadius:10
+
     }
+   
+    
   })
