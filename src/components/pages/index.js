@@ -187,7 +187,7 @@ export default class index extends Component {
     opportunityBtn:{
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.26,
-      backgroundColor:'yellow',
+      backgroundColor:'red',
       borderRadius:14,
       alignItems:'center',
       flexDirection:'row',
