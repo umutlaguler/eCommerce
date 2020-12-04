@@ -18,7 +18,6 @@ export const responsiveSize = (size) => {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
   }
 }
-
 export const AppButton = ({ style, disabled, title, onPress, titleStyle, activityIndicator })=> {
     return(
         <TouchableOpacity
@@ -32,7 +31,6 @@ export const AppButton = ({ style, disabled, title, onPress, titleStyle, activit
         </TouchableOpacity>
     )
 }
-
 export const AppInput = ({ icon, placeholder, onChangeText, style, secureTextEntry, keyboardType, value }) => {
     return (
         
@@ -49,7 +47,6 @@ export const AppInput = ({ icon, placeholder, onChangeText, style, secureTextEnt
         
     )
   }
-
 export const envStyles = StyleSheet.create({
   appButton: {
       width: PhoneWidth * 0.85,

@@ -8,9 +8,6 @@ const logo = {
   width: 64,
   height: 64
 };
-
-
-
 const data = [
     { id: "1", title: "bu bir kampanya", backgroundColor: '#fefddb',uri: 'https://reactnative.dev/img/tiny_logo.png' },
     { id: "2", title: "bu bir kampanya", backgroundColor: '#fbe8e7' },
@@ -19,28 +16,50 @@ const data = [
     { id: "5", title: "bu bir kampanya", backgroundColor: '#f2e5fd' },
   ]
 const cat_data = [
-  { id: "1", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "2", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "3", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "4", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "5", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "6", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "6", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "6", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "7", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "8", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  { id: "9", title: "bu bir kat", uri: 'https://reactnative.dev/img/tiny_logo.png' },
-  
+  { id: "100", title: "bu bir kat" },
+  { id: "101", title: "bu bir kat" },
+  { id: "102", title: "bu bir kat" },
+  { id: "103", title: "bu bir kat" },
+  { id: "104", title: "bu bir kat" },
+  { id: "105", title: "bu bir kat" },
+  { id: "106", title: "bu bir kat" },
+  { id: "107", title: "bu bir kat" },
+  { id: "3", title: "bu bir kat" },
+  { id: "4", title: "bu bir kat" },
+  { id: "5", title: "bu bir kat" },
+  { id: "63", title: "bu bir kat" },
+  { id: "62", title: "bu bir kat" },
+  { id: "61", title: "bu bir kat" },
+  { id: "7", title: "bu bir kat" },
+  { id: "8", title: "bu bir kat" },
+  { id: "9", title: "bu bir kat" },
+  { id: "10", title: "bu bir kat" },
+  { id: "11", title: "bu bir kat" },
+  { id: "12", title: "bu bir kat" },
+  { id: "13", title: "bu bir kat" },
 ]
-
-
 
 const PhoneWidth  = Dimensions.get("window").width;
 const PhoneHeight = Dimensions.get("window").height;
 const numColumns = 4;
 
 export default class index extends Component {
-  
+  constructor(){
+    super();
+    this.state = {
+      page:1
+    }
+  }
+  getMoreData = () =>{
+    this.setState(
+      {
+        page: this.state.page + 1
+      },
+      () =>{
+        this.catRenderItem()
+      }
+    )
+  }
     cardRenderItem = ({ item }) => {
       return (
         <TouchableOpacity style = {styles.seperateCards}>
@@ -63,13 +82,11 @@ export default class index extends Component {
 </View>
       )
     }
-    
-
+  
     render() {
       return (
         
-    <View style={styles.container}>
-              
+    <View style={styles.container}> 
             <TouchableOpacity 
             style={styles.adressBtn}
             onPress={() => Actions.addresses()}
@@ -124,14 +141,21 @@ export default class index extends Component {
             </TouchableOpacity>
         </View>
         <Text style={{color:'grey', margin:4.5}}>Kategoriler</Text>
-            <View style = {styles.allCategories}>
+         <View style = {styles.allCategories}>
                 <FlatList style = {styles.listingCategories}
-                keyExtractor={(item) => item.id}
+                scrollEnabled
                 data={cat_data}  
-                pagingEnabled
                 numColumns = {numColumns}
-                renderItem={this.catRenderItem}/>
+                renderItem={this.catRenderItem}
+                bounces={false}
+                // onEndReached={}
+                // onEndReachedThreshold = {7}
+                contentContainerStyle
+                showsHorizontalScrollIndicator={false}
+                />
+              
             </View>
+           
      </View>
                 
       )
@@ -141,6 +165,7 @@ export default class index extends Component {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+
     },
     adressBtn:{
       alignSelf:'center',
@@ -185,6 +210,7 @@ export default class index extends Component {
       borderBottomRightRadius:30
     },
     opportunityBtn:{
+      justifyContent:'center',
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.26,
       backgroundColor:'red',
@@ -193,14 +219,16 @@ export default class index extends Component {
       flexDirection:'row',
     },
     favouriteBtn:{
+      justifyContent:'center',
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.26,
-      backgroundColor:'red',
+      backgroundColor:'pink',
       borderRadius:14,
       alignItems:'center',
       flexDirection:'row',
     },
     newProductsBtn:{
+      justifyContent:'center',
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.26,
       backgroundColor:'green',
@@ -209,6 +237,7 @@ export default class index extends Component {
       flexDirection:'row',
     },
     mainButtons:{
+      
       flexDirection:'row',
       justifyContent:'space-around',
       height: PhoneHeight * 0.1,
@@ -220,12 +249,13 @@ export default class index extends Component {
     allCategories:{     
       paddingHorizontal:2,
       borderRadius:15,
-      alignSelf:'center'
+      alignSelf:'center',
+      // height:PhoneHeight*0.50
+      flex:1,
+      width:PhoneWidth*0.9
     },
     listingCategories:{
-     
-      
-     
+
     },
     seperateCategoriesBtn:{
       backgroundColor:'grey',

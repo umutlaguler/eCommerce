@@ -28,69 +28,60 @@ class RouterComp extends Component {
                 </Stack>
             <Stack  initial navigationBarStyle={styles.navigationBar} key="main">
                             
-            <Tabs
-                            hideNavBar
-                            showLabel={false}
-                            tabBarStyle={styles.tabs}>
-                            <Scene
-                                initial
-                                key="anasayfa"
-                                component={index} 
-                                title="E-TİCARET"
-                                icon={({focused}) => (
-                                <Image style={styles.tabIcon} source={focused ? require('./images/homepage.png'):require('./images/homepage.png')} />)} />
-                            <Scene
-                                key="diet"
-                                title="ARAMA"
-                                icon={({focused}) => (
-                                <Image style={styles.tabIcon} source={focused ? require('./images/magnifierRed.png'):require('./images/magnifier.png')} />)}
-                                component={search} />
-                            <Scene
-                                key="cart"
-                                title="SEPETİM"
-                                icon={({focused}) => (
-                                <Image style={styles.tabIcon} source={focused ? require('./images/bag.png'):require('./images/shopping-bag.png')} />)}
-                                component={cart} />
-                            
-                            <Scene
-                                key="campaign"
-                                title="KAMPANYALAR"
-                                icon={({focused}) => (
-                                <Image style={styles.tabIcon} source={focused ? require('./images/megaphoneColorful.png'):require('./images/megaphone.png')} />)}
-                                component={campaign} />
-                            <Scene
-                                key="others"
-                                title="DİĞER"
-                                icon={({focused}) => (
-                                <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
-                                component={others} />
-                            <Scene
-                                key="addresses"
-                                title="ADRESLERİM"
-                                // icon={({focused}) => (
-                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
-                                component={addresses} />
-                            <Scene
-                                key="favourites"
-                                title="FAVORİLERİM"
-                                // icon={({focused}) => (
-                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
-                                component={favourites} />
-                            <Scene
-                                key="newProducts"
-                                title="NEW PRODUCTS"
-                                // icon={({focused}) => (
-                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
-                                component={newProducts} /> 
-                            <Scene
-                                key="opportunity"
-                                title="FIRSAT ÜRÜNLERİ"
-                                // icon={({focused}) => (
-                                // <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
-                                component={opportunity} />            
-                                
-                            
-                        </Tabs>
+    <Tabs
+                hideNavBar
+                showLabel={true}
+                tabBarStyle={styles.tabs}>
+                <Scene
+                    initial
+                    key="anasayfa"
+                    component={index} 
+                    title="E-TİCARET"
+                    icon={({focused}) => (
+                    <Image style={styles.tabIcon} source={focused ? require('./images/homepage.png'):require('./images/homepage.png')} />)} />
+                <Scene
+                    key="diet"
+                    title="ARAMA"
+                    icon={({focused}) => (
+                    <Image style={styles.tabIcon} source={focused ? require('./images/magnifierRed.png'):require('./images/magnifier.png')} />)}
+                    component={search} />
+                <Scene
+                    key="cart"
+                    title="SEPETİM"
+                    icon={({focused}) => (
+                    <Image style={styles.tabIcon} source={focused ? require('./images/bag.png'):require('./images/shopping-bag.png')} />)}
+                    component={cart} />
+                
+                <Scene
+                    key="campaign"
+                    title="KAMPANYALAR"
+                    icon={({focused}) => (
+                    <Image style={styles.tabIcon} source={focused ? require('./images/megaphoneColorful.png'):require('./images/megaphone.png')} />)}
+                    component={campaign} />
+                <Scene
+                    key="others"
+                    title="DİĞER"
+                    icon={({focused}) => (
+                    <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
+                    component={others} />
+                
+    </Tabs>
+                    <Scene
+                            key="addresses"
+                            title="ADRESLERİM"
+                            component={addresses} />
+                        <Scene
+                            key="favourites"
+                            title="FAVORİLERİM"
+                            component={favourites} />
+                        <Scene
+                            key="newProducts"
+                            title="NEW PRODUCTS"
+                            component={newProducts} /> 
+                        <Scene
+                            key="opportunity"
+                            title="FIRSAT ÜRÜNLERİ"
+                            component={opportunity} />  
             </Stack>          
             </Stack>
         </Router>
@@ -109,6 +100,8 @@ class RouterComp extends Component {
         
     },
     tabIcon: {
+        
+        paddingHorizontal:13,
         width: responsiveSize(19),
         height: responsiveSize(19),
     },
