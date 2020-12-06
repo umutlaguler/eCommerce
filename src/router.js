@@ -13,6 +13,7 @@ import addresses from './components/pages/addresses';
 import favourites from './components/pages/favourites';
 import newProducts from './components/pages/newProducts';
 import opportunity from './components/pages/opportunity';
+import campaignDetail from './components/pages/campaignDetail';
 // import { PhoneWidth } from './components/config/env';
 
 class RouterComp extends Component {
@@ -59,6 +60,7 @@ class RouterComp extends Component {
                     <Image style={styles.tabIcon} source={focused ? require('./images/megaphoneColorful.png'):require('./images/megaphone.png')} />)}
                     component={campaign} />
                 <Scene
+                    navigationBarStyle={{ backgroundColor: '#FE5F55' }}
                     key="others"
                     title="DİĞER"
                     icon={({focused}) => (
@@ -66,6 +68,12 @@ class RouterComp extends Component {
                     component={others} />
                 
     </Tabs>
+                    
+                    <Scene
+                            navigationBarStyle={{ backgroundColor: '#FDCA40' }}
+                            key="campaignDetail"
+                            title="KAMPANYA DETAYI"
+                            component={campaignDetail} />
                     <Scene
                             key="addresses"
                             title="ADRESLERİM"
@@ -96,11 +104,9 @@ class RouterComp extends Component {
     tabs: {
         borderTopWidth: 2,
         borderTopColor: '#dfdfdf',
-        zIndex: 1,
-        
+        zIndex: 1, 
     },
     tabIcon: {
-        
         paddingHorizontal:13,
         width: responsiveSize(19),
         height: responsiveSize(19),

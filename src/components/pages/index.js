@@ -122,7 +122,7 @@ export default class index extends Component {
             showsHorizontalScrollIndicator={false}
             pagingEnabled
             renderItem={this.cardRenderItem} />
-            </View>
+            
         <View style={styles.mainButtons}>
             <TouchableOpacity 
             onPress={() => Actions.opportunity()}
@@ -154,6 +154,7 @@ export default class index extends Component {
                 showsHorizontalScrollIndicator={false}
                 />
               
+            </View>
             </View>
            
      </View>
@@ -237,20 +238,18 @@ export default class index extends Component {
       flexDirection:'row',
     },
     mainButtons:{
-      
-      flexDirection:'row',
-      justifyContent:'space-around',
-      height: PhoneHeight * 0.1,
-      width: PhoneWidth * 1,
-      alignSelf:'center',
-      marginTop:'-99%',
-      paddingHorizontal:10,        
+           flexDirection:'row',
+           justifyContent:'space-around',
+           paddingHorizontal:20,
+           marginTop:5
+
     },
-    allCategories:{     
+    allCategories:{   
+      // borderWidth:2,  
       paddingHorizontal:2,
       borderRadius:15,
       alignSelf:'center',
-      // height:PhoneHeight*0.50
+      //  height:PhoneHeight*0.1,
       flex:1,
       width:PhoneWidth*0.9
     },

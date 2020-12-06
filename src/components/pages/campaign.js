@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity,Dimensions,Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity,Dimensions,Image,} from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { FlatList } from 'react-native-gesture-handler';
 
 const data = [
@@ -23,7 +24,9 @@ export default class campaign extends Component {
   campaignRenderItem=({item}) => {
     return(
     <View style = {styles.campaignBox}>
-      <TouchableOpacity style = {styles.campaignTouchable}>
+      <TouchableOpacity 
+      onPress={() => Actions.campaignDetail()}
+      style = {styles.campaignTouchable}>
         <View style={[styles.campaignWrapper, { backgroundColor: item.backgroundColor }]}>
           <Image
             style={styles.photoOfCampaign}
