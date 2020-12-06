@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+<array>
+  <string>AbrilFatface-Regular.ttf</string>
+</array>
+
 	<key>2824660251110711</key>
 	<string>2824660251110711</string>
 	<key>CFBundleDevelopmentRegion</key>

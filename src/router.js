@@ -14,6 +14,7 @@ import favourites from './components/pages/favourites';
 import newProducts from './components/pages/newProducts';
 import opportunity from './components/pages/opportunity';
 import campaignDetail from './components/pages/campaignDetail';
+import { color } from 'react-native-reanimated';
 // import { PhoneWidth } from './components/config/env';
 
 class RouterComp extends Component {
@@ -30,34 +31,35 @@ class RouterComp extends Component {
             <Stack  initial navigationBarStyle={styles.navigationBar} key="main">
                             
     <Tabs
-                hideNavBar
-                showLabel={true}
+             hideNavBar
+                showLabel={false}
+                labelStyle={styles.label}
                 tabBarStyle={styles.tabs}>
                 <Scene
                     initial
                     key="anasayfa"
                     component={index} 
-                    title="E-TİCARET"
+                    title ="E-TİCARET"
                     icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/homepage.png'):require('./images/homepage.png')} />)} />
+                    <Image style={styles.tabIcon} source={focused ? require('./images/homepageColorful.png'):require('./images/homepage.png')} />)} />
                 <Scene
                     key="diet"
                     title="ARAMA"
                     icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/magnifierRed.png'):require('./images/magnifier.png')} />)}
+                    <Image style={styles.tabIcon} source={focused ? require('./images/searchColorful.png'):require('./images/search.png')} />)}
                     component={search} />
                 <Scene
                     key="cart"
                     title="SEPETİM"
                     icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/bag.png'):require('./images/shopping-bag.png')} />)}
+                    <Image style={styles.tabIcon} source={focused ? require('./images/shoppingCartColorful.png'):require('./images/shoppingCart.png')} />)}
                     component={cart} />
                 
                 <Scene
                     key="campaign"
                     title="KAMPANYALAR"
                     icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/megaphoneColorful.png'):require('./images/megaphone.png')} />)}
+                    <Image style={styles.tabIcon} source={focused ? require('./images/megaPhoneColorful.png'):require('./images/megaPhone.png')} />)}
                     component={campaign} />
                 <Scene
                     navigationBarStyle={{ backgroundColor: '#FE5F55' }}
@@ -107,10 +109,15 @@ class RouterComp extends Component {
         zIndex: 1, 
     },
     tabIcon: {
-        paddingHorizontal:13,
+        paddingHorizontal:11,
         width: responsiveSize(19),
         height: responsiveSize(19),
     },
+    labelStyle: {
+        fontSize: 12,
+        color: 'red',
+    
+      },
     
     
    
