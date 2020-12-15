@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   campaigns:{
-    width:PhoneWidth * 0.9,
+    // width:PhoneWidth * 0.9,
   },
   campaignBox:{
     width:PhoneWidth * 0.9,

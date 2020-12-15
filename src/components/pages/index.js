@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity, Modal, SafeAreaView ,Dimensions,ScrollView, ImageBackground} from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { fetchCategories } from '../../actions/productsAction';
 
 const logo = {
   uri: 'https://reactnative.dev/img/tiny_logo.png',
@@ -9,45 +10,25 @@ const logo = {
   height: 64
 };
 const data = [
-    { id: "1", title: "bu bir kampanya", backgroundColor: '#fefddb',uri: 'https://reactnative.dev/img/tiny_logo.png' },
-    { id: "2", title: "bu bir kampanya", backgroundColor: '#fbe8e7' },
-    { id: "3", title: "bu bir kampanya", backgroundColor: '##f2e5fd' },
-    { id: "4", title: "bu bir kampanya", backgroundColor: '#dff3fe' },
-    { id: "5", title: "bu bir kampanya", backgroundColor: '#f2e5fd' },
+    { id: "1", title: "bu bir kampanya", backgroundColor: '#fefddb',uri:'https://envato-shoebox-0.imgix.net/0d80/552a-aceb-4181-bf08-49c70144d9e5/Goods-35.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=2f6fc6c7c3d02481ddd5a74a401fc4f7'  },
+    { id: "2", title: "bu bir kampanya", backgroundColor: '#fbe8e7',uri:'https://envato-shoebox-0.imgix.net/8f42/9f4c-983e-4bf6-a731-22aaa077a810/IMG_7912.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=ee3910220eb35658fe4081fff890a79d'},
+    { id: "3", title: "bu bir kampanya", backgroundColor: '##f2e5fd', uri:'https://envato-shoebox-0.imgix.net/673e/e016-3db3-46fd-880e-c15f03db6666/smporidge3.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=b7faa4619db6f2eba586f9a7fb36c98c' },
+    { id: "4", title: "bu bir kampanya", backgroundColor: '#dff3fe', uri:'https://envato-shoebox-0.imgix.net/0d80/552a-aceb-4181-bf08-49c70144d9e5/Goods-35.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=2f6fc6c7c3d02481ddd5a74a401fc4f7' },
+    { id: "5", title: "bu bir kampanya", backgroundColor: '#f2e5fd' ,uri:'https://envato-shoebox-0.imgix.net/673e/e016-3db3-46fd-880e-c15f03db6666/smporidge3.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1600&s=b7faa4619db6f2eba586f9a7fb36c98c'},
   ]
-const cat_data = [
-  { id: "100", title: "bu bir kat" },
-  { id: "101", title: "bu bir kat" },
-  { id: "102", title: "bu bir kat" },
-  { id: "103", title: "bu bir kat" },
-  { id: "104", title: "bu bir kat" },
-  { id: "105", title: "bu bir kat" },
-  { id: "106", title: "bu bir kat" },
-  { id: "107", title: "bu bir kat" },
-  { id: "3", title: "bu bir kat" },
-  { id: "4", title: "bu bir kat" },
-  { id: "5", title: "bu bir kat" },
-  { id: "63", title: "bu bir kat" },
-  { id: "62", title: "bu bir kat" },
-  { id: "61", title: "bu bir kat" },
-  { id: "7", title: "bu bir kat" },
-  { id: "8", title: "bu bir kat" },
-  { id: "9", title: "bu bir kat" },
-  { id: "10", title: "bu bir kat" },
-  { id: "11", title: "bu bir kat" },
-  { id: "12", title: "bu bir kat" },
-  { id: "13", title: "bu bir kat" },
-]
 
 const PhoneWidth  = Dimensions.get("window").width;
 const PhoneHeight = Dimensions.get("window").height;
 const numColumns = 4;
 
-export default class index extends Component {
+ class index extends Component {
+  componentWillMount() {
+    this.props.fetchCategories()
+  }
   constructor(){
     super();
     this.state = {
-      page:1
+      page:1,
     }
   }
   getMoreData = () =>{
@@ -60,39 +41,52 @@ export default class index extends Component {
       }
     )
   }
-    cardRenderItem = ({ item }) => {
-      return (
-        <TouchableOpacity style = {styles.seperateCards}>
-        <View style={[styles.cardWrapper, { backgroundColor: item.backgroundColor }]}>
-          <Text style={styles.cardTitle}> {item.title} </Text>
-        </View>
-        </TouchableOpacity>
-        
-      )
-    }
+  cardRenderItem = ({ item }) => {
+    return (
+      <TouchableOpacity style = {styles.seperateCards}>
+      <View style={[styles.cardWrapper, { backgroundColor: item.backgroundColor }]}>
+      <Image
+                    style={{ borderRadius:26, height: PhoneHeight * 0.25, width: PhoneWidth * 0.8,}}
+                        source={{
+                          uri : item.uri
+                        }}
+                    />
+        <Text style={styles.cardTitle}> {item.title} </Text>
+      </View>
+      </TouchableOpacity>
+      
+    )
+  }
     catRenderItem = ({ item }) => {
       return (
-<View style = {styles.allCategories}>
-        <TouchableOpacity style = {styles.seperateCategoriesBtn}>
-        <View style={[styles.catWrapper, { backgroundColor: item.backgroundColor }]}>
-      {/* <ImageBackground style={{width: '2%', height: '2%'}}>{item.uri}</ImageBackground> */}
-          <Text style={styles.catTitle}> {item.title} </Text>
+        <View style = {styles.allCategories}>
+          <TouchableOpacity 
+            onPress={() => this.props.fetchCategories(item.id) & Actions.favourites({cat_id: item.id})
+            }
+             style = {styles.seperateCategoriesBtn}>
+            <View style={[styles.catWrapper, { backgroundColor: item.backgroundColor }]}>
+              <Image
+              style={{ height: PhoneHeight * 0.1, width: PhoneWidth * 0.21, borderRadius: 10}}
+              source={{
+                uri : item.image
+              }}/>
+              <Text style={styles.catTitle}> {item.title} </Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        </TouchableOpacity>
-</View>
       )
     }
-  
     render() {
-      return (
-        
+      // console.log("categ id: ", this.state.cat_id)
+      const { categoriesValue, cat_id} = this.props;
+      return (    
     <View style={styles.container}> 
             <TouchableOpacity 
             style={styles.adressBtn}
             onPress={() => Actions.addresses()}
             >
             <Text style={styles.textAdress}>
-                    ProjectXR Yenikent Sabuncu Sitesi Döşeme 
+                    ProjectXR Yenikent Sabuncu Sitesi DÃ¶ÅŸeme 
                 </Text>
             <Image
            style={styles.arrowDown}
@@ -130,12 +124,12 @@ export default class index extends Component {
                 <Text >fırsat</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={() => Actions.favourites()}
+             onPress={() => Actions.favourites()}
             style={styles.favouriteBtn}>
                 <Text>favori</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress={() => Actions.newProducts()}
+             onPress={() => Actions.newProducts()}
             style={styles.newProductsBtn}>
                 <Text>yeni</Text>
             </TouchableOpacity>
@@ -144,7 +138,7 @@ export default class index extends Component {
          <View style = {styles.allCategories}>
                 <FlatList style = {styles.listingCategories}
                 scrollEnabled
-                data={cat_data}  
+                data={categoriesValue}  
                 numColumns = {numColumns}
                 renderItem={this.catRenderItem}
                 bounces={false}
@@ -153,10 +147,8 @@ export default class index extends Component {
                 contentContainerStyle
                 showsHorizontalScrollIndicator={false}
                 />
-              
             </View>
-            </View>
-           
+            </View>   
      </View>
                 
       )
@@ -175,7 +167,6 @@ export default class index extends Component {
       borderWidth:0,
       flexDirection:'row',
       backgroundColor:'#f6f8fa'
-
     },
     allCards:{
       width:PhoneWidth * 1,
@@ -242,29 +233,48 @@ export default class index extends Component {
            justifyContent:'space-around',
            paddingHorizontal:20,
            marginTop:5
-
     },
-    allCategories:{   
-      // borderWidth:2,  
+    allCategories:{ 
+      paddingVertical:7,
       paddingHorizontal:2,
       borderRadius:15,
       alignSelf:'center',
-      //  height:PhoneHeight*0.1,
       flex:1,
-      width:PhoneWidth*0.9
+      width:PhoneWidth*0.9,
+      height: PhoneHeight * 0.15
     },
     listingCategories:{
 
     },
     seperateCategoriesBtn:{
-      backgroundColor:'grey',
-      padding:5,
+      backgroundColor:'white',
+      padding:1,
       marginVertical:3,
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.21,
       borderRadius:10
-
+    },
+    catTitle:{
+      alignSelf:"center",
+      fontSize:12,
     }
    
     
   })
+
+  const mapStateToProps = state => {
+    const { categoriesValue, cat_id } = state.productsReducer;
+
+    return {
+      categoriesValue,
+      cat_id
+    }
+  }
+  
+  export default connect(
+    mapStateToProps,
+    {
+      fetchCategories,
+      
+    }
+  )(index)

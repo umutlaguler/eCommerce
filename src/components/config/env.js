@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { View, Dimensions, TouchableOpacity, TextInput, StyleSheet, Text, PixelRatio, Image, ActivityIndicator } from 'react-native';
 
-
-
-// export const API_BASE    = "htktp://localhost:5002/api/v1"
-
-
+export const API_BASE = 'https://ecommerce-backapp.herokuapp.com/api/v1'
 export const PhoneHeight = Dimensions.get("window").height;
 export const PhoneWidth  = Dimensions.get("window").width;
 
@@ -16,8 +12,8 @@ export const responsiveSize = (size) => {
     return Math.round(PixelRatio.roundToNearestPixel(newSize))
   } else {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-  }
-}
+  }}
+  
 export const AppButton = ({ style, disabled, title, onPress, titleStyle, activityIndicator })=> {
     return(
         <TouchableOpacity

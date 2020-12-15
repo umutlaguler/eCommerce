@@ -1,59 +1,71 @@
 import { persistReducer } from 'redux-persist';
-import {
-    FETCH_PERSON_DETAIL,
-    SIGN_IN_CLICK,
-    FETCH_PERSON_TARGET,
-    SIGN_IN_SUCCESS,
-    SIGN_IN_FAILED,
+import { 
     SIGN_UP_CLICK,
     SIGN_UP_FAILED,
     SIGN_UP_SUCCESS,
-    SEND_PERSON_DETAIL_ClICK,
-    SEND_PERSON_DETAIL_SUCCESS,
-    SEND_PERSON_DETAIL_FAILED,
-    LOG_OUT_CLICK, LOG_OUT_SUCCESS, SIGN_IN_SUCCESS_PERSON
+    SIGN_IN_CLICK,
+    SIGN_IN_SUCCESS,
+    SIGN_IN_FAILED
 } from '../actions/authenticationAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 const INITIAL_STATE = {
-    userToken: "",
-    isAuthLogin: false,
-    isMainLogin: false,
-    personDetailValues: {},
-    authButtonSpinner: false,
-    personTargetValue: [],
-    fullNameErrorValue: "",
-    emailErrorValue: "",
+    userToken : "",
+    phoneErrorValue: "",
     passwordErrorValue: "",
-    genderErrorValue: "",
-    ageErrorValue: "",
-    sizeErrorValue: "",
-    kgErrorValue: "",
-    targetErrorValue: "",
-    authSpinnerStatus: false,
-    dietCount: 0
+    fullNameErrorValue: "",
 }
-
-const AuthenticationReducer = (state = INITIAL_STATE, action) => {
+const persistConfig = {
+    key: "root",
+    storage:AsyncStorage
+};
+const authenticationReducer = (state = INITIAL_STATE, action) => {
     switch (action.type){
         case SIGN_UP_CLICK:
             return {
                 ...state
             }
         case SIGN_UP_SUCCESS:
+            console.log("başarılı üye olma");
             return {
-                ...state
-
+                ...state,
+                fullNameErrorValue: "",
+                phoneErrorValue: "",
+                passwordErrorValue: "",
             }
         case SIGN_UP_FAILED:
             return {
                 ...state,
-                fullNameErrorValue: action.payload.full_name,
-                emailErrorValue: action.payload.email,
-                passwordErrorValue: action.payload.password,
+                fullNameErrorValue:  action.payload.fullname,
+                phoneErrorValue:  action.payload.phone,
+                passwordErrorValue:action.payload.password
             }
+        case SIGN_IN_CLICK:
+            return {
+                ...state,
+               
+            }
+        case SIGN_IN_SUCCESS:
+            console.log("başarılı giriş ");
+            return {
+                ...state,
+                phoneErrorValue: "",
+                passwordErrorValue: "",
+               
+            }
+        case SIGN_IN_FAILED:
+            console.log("hatalı giriş yapma");
+            return {
+                ...state,
+                phoneErrorValue: action.payload != null ? action.payload.phone:null,
+                passwordErrorValue: action.payload != null ? action.payload.password:"Lütfen telefon veya şifrenizi kontrol ediniz.",
+                
+            }
+        
             default:
                 return state;
     
           }
         }
-        export default persistReducer(persistConfig, AuthenticationReducer);
+        export default persistReducer(persistConfig, authenticationReducer);

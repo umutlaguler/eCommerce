@@ -1,84 +1,119 @@
 import React, { Component } from 'react';
-import {Text,TouchableOpacity,TextInput,View ,StyleSheet,Image,key,Modal,ScrollView,Keyboard} from 'react-native';
+import {Text,TouchableOpacity,TextInput,View ,StyleSheet,Image,key,Modal,ScrollView} from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { PhoneHeight,PhoneWidth,responsiveSize,envStyles,AppInput } from '../config/env';
-import LottieView from 'lottie-react-native';
-import { Animated, Easing } from 'react-native';
-import {  } from '../../actions/authenticationAction';
+import { signUp } from '../../actions/authenticationAction';
 import { color } from 'react-native-reanimated';
-// import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from 'react-native';
 import { userAgreement } from '../helpComponents/userAgreement';
 
- class signUp extends Component {
-  
+const data =  [
+  {id:"1" , title: "Kadın"},
+  {id:"2" , title: "Erkek"}
+]
+
+ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state={
-      data:['Erkek','Kadın'],
-      genderStatus: null,
-      checked:null,
+      fullNameValue:"",
+      phoneNumberValue:"",
+      birthdayValue:"",
+      emailValue:"",
+      passwordValue:"",
+      confirmPasswordValue:"",
       checkedContract:null,
       contractStatus: null,
       userAgremeentStatus: false,
       userAgreementModalVisible: false,
-      fullNameValue:        "",
-      emailValue:           "",
-      passwordValue:        "",
-      confirmPasswordValue: "",
-      phoneNumberValue:     ""
+      gender_id: "",
+      genderStatus:"",
+      selectedRadio: false,
     }
   }
- 
+  genderRenderItem = ({ item }) => {
+    // console.log("item: ", item)
+    // console.log("seçilen kim? ", this.state.gender_id)
+    return(
+      <View style= {styles.radioButtonsContainer}>
+          <TouchableOpacity 
+              style= {{
+                height: responsiveSize(15),
+                width: responsiveSize(15),
+                borderWidth:1,
+                borderRadius: 60,
+                margin: PhoneHeight * 0.005,
+                backgroundColor: ( this.state.gender_id == item.id ) ? "black" : "white"
+              }}
+              onPress= {( gender_id ) => this.setState({
+                genderStatus:item.title,
+                gender_id: item.id,
+                selectedRadio: true
+              })}>
+          </TouchableOpacity>
+          <Text style= {styles.gender}>{item.title}</Text>
+      </View>
+  )
+  }
+    onfullNameChanged = (value) =>this.setState({fullNameValue: value})
+    onPhoneNumberChanged = (value) =>this.setState({phoneNumberValue: value})
+    onBirthdayChanged = (value) =>{
+       this.setState({birthdayValue: value})
 
-    onfullNameChanged = (value) => this.setState({ fullNameValue: value })
-    onEmailChanged = (value) => this.setState({ emailValue: value })
-    onPhoneNumberChanged = (value) => this.setState({phoneNumberValue: value})
-    onPasswordChanged = (value) => this.setState({ passwordValue: value })
-    onBirthdayChanged = (value) => this.setState({birthDayValue: value})
-    onConfirmPasswordChanged = (value) => this.setState({ confirmPasswordValue: value })
+  }
+    onEmailChanged = (value) => this.setState({emailValue: value})
+    onPasswordChanged = (value) => this.setState({passwordValue: value})
+    onGenderChanged = (value) => this.setState({gender_id: value})
+    onConfirmPasswordChanged = (value) => this.setState({confirmPasswordValue: value})
 
-    onSignUp = () => this.props.signUp(this.state.fullNameValue, this.state.emailValue, this.state.phoneNumberValue, this.state.passwordValue, this.state.birthDayValue )
-  // onSignUp = () => {
-  //   AsyncStorage.getItem("device").then((token) => {
-  //     console.log("token", token)
-  //     this.props.signUpClicked(this.props.fullNameValue, this.props.emailValue, this.props.passwordValue,token)
-  //   })
-  // }
+    onSignUp = () => {
+      console.log("bastı mı ");
+      console.log(this.state.gender_id)
+      this.props.signUp(this.state.fullNameValue,this.state.phoneNumberValue,this.state.birthdayValue, this.state.emailValue,this.state.passwordValue, this.state.genderStatus)
+    }
+
     render() {
-      const { passwordValue, confirmPasswordValue, userAgremeentStatus, userAgreementModalVisible } = this.state;
-      const errorMessageConfirmPassword = passwordValue != confirmPasswordValue ? <Text style={styles.errors}> {"Şifreniz eşleşmiyor."} </Text>:null
+        const { fullNameErrorValue, phoneErrorValue, passwordErrorValue,} = this.props;
+        const { passwordValue, confirmPasswordValue, userAgremeentStatus, userAgreementModalVisible } = this.state;
+        const errorMessageFullName =  fullNameErrorValue ? <Text style={styles.errors}> {  fullNameErrorValue} </Text>:null
+        const errorMessagePhone = phoneErrorValue ? <Text style={styles.errors}> {phoneErrorValue} </Text>:null
+        const errorMessagePassword = passwordErrorValue ? <Text style={styles.errors}> { passwordErrorValue} </Text>:null
+        const errorMessageConfirmPassword = passwordValue != confirmPasswordValue ? <Text style={styles.errors}> {"Şifreniz eşleşmiyor."} </Text>:null
       //buraya gelecek olan değerler var şifre eşleşme durumu vs.
-      
-
-
         return (
           <View style={styles.background}>
             <View style={styles.container}>
            <Image
            style={styles.logoImage}
-           source={require('../../images/newLogo.png')}
-         />
-      
+           source={require('../../images/newLogo.png')}/>
             <AppInput 
                 style={styles.input}
                 placeholder='Ad Soyad'
                 placeholderTextColor='#545454'
                 onChangeText={this.onfullNameChanged}
                 />
+                 {errorMessageFullName}
             <TextInput 
+                maxLength={10}
+                keyboardType = 'numeric'
+                autoCorrect={true}
                 style={styles.input}
                 placeholder='Telefon'
                 placeholderTextColor='#545454'
-                onChangeText={this.onPhoneNumberChanged}
-                />
+                onChangeText={this.onPhoneNumberChanged}/>
+                {errorMessagePhone}
              <TextInput 
+                maxLength={8}
+                keyboardType = 'numeric'
                 style={styles.input}
-                placeholder='Doğum Tarihi'
+                placeholder='GG/AA/YYYY'
                 placeholderTextColor='#545454'
-                onChangeText={this.onBirthdayChanged}
-                />
+                onChangeText={this.onBirthdayChanged}/>
+                
              <TextInput 
+                keyboardType = 'email-address'
                 style={styles.input}
                 placeholder='Email'
                 placeholderTextColor='#545454'
@@ -90,52 +125,25 @@ import { userAgreement } from '../helpComponents/userAgreement';
                 placeholder='Şifre'
                 placeholderTextColor='#545454'
                 onChangeText={this.onPasswordChanged}
-                
                 />
+                {errorMessagePassword}
              <TextInput
                 // secureTextEntry 
                 style={styles.input}
                 placeholder='Şifre Tekrar'
                 placeholderTextColor='#545454'
-                onChangeText={this.onConfirmPasswordChanged}
-                
-                />
-                {errorMessageConfirmPassword}      
-                 <View style={{ flexDirection: 'row'}}>
-             { 
-             this.state.data.map((data,key)=>{
-               return(
+                onChangeText={this.onConfirmPasswordChanged}/>
+                {errorMessageConfirmPassword}
 
-                <View style={styles.genderBoxOut}>
-                   <View style={styles.sexCheckBoxes}>
-              {
-              this.state.checked==key?
-              <TouchableOpacity style={styles.sexCheckBtn}>
-              <Image
-                style={styles.sexCheckBoxImg}
-                source={require('../../images/circle.png')}
-              />
-                <Text style={styles.genderTxt}>{data}</Text>
-              </TouchableOpacity>
-              :
-              <TouchableOpacity 
-              onPress={()=>{this.setState({checked:key})}}
-              style={styles.sexCheckBtn}>
-              <Image
-                style={styles.sexCheckBoxImg}
-                source={require('../../images/unselected.png')}
-              />
-                <Text style={styles.genderTxt}>{data}</Text>
-              </TouchableOpacity>
+      <View style={{ flexDirection: 'row' }}>
+              <FlatList // listing category
+                    
+                    data={data}
+                    renderItem={this.genderRenderItem}
+                    keyExtractor={item => item.id}
+                    />
+              </View>
 
-              }
-              </View> 
-                 </View> 
-               )
-             })
-             }
-                 </View> 
-               
                  <View style={styles.userAgreement}>
                       <TouchableOpacity
                           activeOpacity={0.5}
@@ -146,6 +154,7 @@ import { userAgreement } from '../helpComponents/userAgreement';
                               <Image style={styles.checkBoxIcon} source={require('../../images/circle.png')} />:null
                           }
                       </TouchableOpacity>
+                      
                       <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => this.setState({ userAgreementModalVisible: true })}>
@@ -172,7 +181,8 @@ import { userAgreement } from '../helpComponents/userAgreement';
                         </ScrollView>
                     </View>
                 </Modal>
-
+          
+           
             <TouchableOpacity
                 disabled={userAgremeentStatus == true ? false:true}
                 onPress={this.onSignUp}
@@ -182,12 +192,10 @@ import { userAgreement } from '../helpComponents/userAgreement';
                 <Text style={styles.questionText}>Hesabın var mı ? 
                     <TouchableOpacity style={styles.logInBtn}>
                     <Text style={styles.loginButtonText}
-                          onPress = {() => Actions.signIn()}> Giriş Yap</Text>
+                          onPress = {() => Actions.login()}> Giriş Yap</Text>
                            </TouchableOpacity>
                </Text>
-              
             </View>
-           
           </View>   
         )
     }
@@ -198,16 +206,17 @@ const styles = StyleSheet.create({
       justifyContent: "center",
     },
     logoImage:{
-      marginBottom:'10%',
+      marginTop: PhoneHeight * 0.1    ,
       width: responsiveSize(100),
       height: responsiveSize(100),
       resizeMode: "contain",
       alignSelf: "center"
     },
     container:{
+      flex: 1,
       height: PhoneHeight * 0.50,  
-      justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      // justifyContent: "center"
     },
     input: {
       width: PhoneWidth * 0.7,
@@ -255,7 +264,7 @@ const styles = StyleSheet.create({
       fontSize: responsiveSize(14),
     },
     userAgreement: {
-      paddingTop: '20%',
+      paddingTop: '10%',
       alignItems: 'center',
       flexDirection: 'row',
   },
@@ -299,28 +308,61 @@ const styles = StyleSheet.create({
       // borderWidth:1,
       height: PhoneHeight * 0.06, 
     },
-    userAgreementModalContainer: {
-      width: "100%",
-      height: PhoneHeight * 0.7,
-      marginTop: PhoneHeight * 0.3,
-      backgroundColor: '#fff',
-      shadowColor: "#000",
-      shadowOffset: {
-          width: 0,
-          height: 7,
-      },
-      shadowOpacity: 0.43,
-      shadowRadius: 9.51,
-      elevation: 15,
-  },
-  userAgreementModalTopContent: {
+userAgreementModalContainer: {
+    width: "100%",
+    height: PhoneHeight * 0.7,
+    marginTop: PhoneHeight * 0.3,
+    backgroundColor: '#fff',
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 7,
+},
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
+    elevation: 15,
+},
+userAgreementModalTopContent: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     padding: 10
 },
+radioButtonsContainer:{
+  flexDirection: "row",
+  justifyContent:'center'
+},
+radio:{
+  height: responsiveSize(15),
+  width: responsiveSize(15),
+  borderWidth:1,
+  borderRadius: 60,
+  margin: PhoneHeight * 0.005,
+},
+gender:{
+  marginTop: PhoneHeight * 0.005,
+
+},
+errors: {
+  color: '#ec5341',
+  fontSize: responsiveSize(13),
+  // marginTop: 5
+},
 });
-
-export default signUp
-
-
+const mapStateToProps = (state) => {
+  const { fullNameValue,phoneNumberValue,birthDayValue,emailValue,passwordValue,gender_id } = state.authenticationReducer;
+  return {
+     fullNameValue,
+     phoneNumberValue,
+     birthDayValue,
+     emailValue,
+     passwordValue,
+     gender_id  
+  }
+}
+export default connect(
+  mapStateToProps,
+  {
+    signUp
+  }
+)(SignUp)

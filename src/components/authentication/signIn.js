@@ -4,6 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { PhoneHeight,PhoneWidth,responsiveSize } from '../config/env';
 import { LoginButton, AccessToken,LoginManager} from 'react-native-fbsdk';
+import { signIn } from '../../actions/authenticationAction';
 import LottieView from 'lottie-react-native';
 import { Animated, Easing } from 'react-native';
 import { fullNameChange,emailChange, passwordChange ,signUpClicked} from '../../actions/authenticationAction';
@@ -13,7 +14,7 @@ import {GoogleSignin,GoogleSigninButton,statusCodes,
 
 GoogleSignin.configure();
 
-class signUp extends Component {
+class SignIn extends Component {
   
   
   constructor(props) {
@@ -21,14 +22,18 @@ class signUp extends Component {
     this.state={
       data:['Erkek','Kadın'],
       genderStatus: null,
-      checked:null
+      checked:null,
+      phoneNumberValue:"",
+      passwordValue:""
     }
   }
-
+  onSignIn = () => {
+    console.log("giriş yapa bastı mı  ");
+    this.props.signIn(this.state.phoneNumberValue,this.state.passwordValue)
+  }
   
-    onFullNameChanged = (value) => this.props.fullNameChange(value)
-    onEmailChanged    = (value) => this.props.emailChange(value)
-    onPasswordChanged = (value) => this.props.passwordChange(value)
+  onPhoneNumberChanged = (value) => this.setState({phoneNumberValue: value})
+  onPasswordChanged = (value) => this.setState({passwordValue: value})
 
     signInWithGoogle = async () => {
       try {
@@ -66,11 +71,10 @@ class signUp extends Component {
       );
       
     }
-    
-    
- 
     render() {
-      
+      const { phoneErrorValue, passwordErrorValue } = this.props;
+      const errorMessagePhone = phoneErrorValue ? <Text style={styles.errors}>{ phoneErrorValue}</Text>:null
+      const errorMessagePassword = passwordErrorValue ? <Text style={styles.errors}>{ passwordErrorValue}</Text>:null
         return (
           <View style={styles.background}>
             <View style={styles.container}>
@@ -79,19 +83,23 @@ class signUp extends Component {
               source={require('../../images/newLogo.png')}
             />
              <TextInput 
+                keyboardType='numeric'
+                maxLength = {10}
                 style={styles.input}
-                placeholder='E-mail'
+                placeholder='Telefon'
                 placeholderTextColor='#545454'
-                onChangeText={(value) => this.props.fullNameChange(value)}
+                onChangeText={(value) => this.onPhoneNumberChanged(value)}
                 />
+                {errorMessagePhone}
             <TextInput 
                 style={styles.input}
                 placeholder='Şifre'
                 placeholderTextColor='#545454'
-                onChangeText={(value) => this.props.emailChange(value)}
+                onChangeText={(value) => this.onPasswordChanged(value)}
                 />
+                {errorMessagePassword}
             <TouchableOpacity
-                onPress={this.onSignUp}
+                onPress={this.onSignIn}
                 style={styles.signInButton}>
               <Text style={styles.signInButtonText}>Giriş Yap</Text>
             </TouchableOpacity>
@@ -130,13 +138,7 @@ class signUp extends Component {
           }
           onLogoutFinished={() => console.log("logout.")}
           />
-      </View>
-            {/* <TouchableOpacity
-                onPress={this.onSignUp}
-                style={styles.facebookSignInBtn}>
-              <Text style={styles.facebookSignInBtnText}>Facebook</Text>
-            </TouchableOpacity> */}
-               
+      </View>  
             </View>
            
           </View>   
@@ -193,6 +195,7 @@ const styles = StyleSheet.create({
       backgroundColor:'black',
       borderRadius:14
     },
+    
     signInButtonText:{
       color: "white",
       textAlign: "center",
@@ -225,8 +228,8 @@ const styles = StyleSheet.create({
       marginTop:'10%'
     },
     googleSignInBtn:{
-      height: PhoneHeight * 0.05,
-      width: PhoneWidth * 0.5, 
+      height: PhoneHeight * 0.04,
+      width: PhoneWidth * 0.47, 
       alignSelf: "center",
       marginTop: 10,
       justifyContent:"center",
@@ -234,7 +237,8 @@ const styles = StyleSheet.create({
       alignItems:'center',
       borderRadius:20,
       borderColor:'#FF0000',
-      borderWidth:2
+      borderWidth:2,
+      marginBottom:5
     },
     facebookSignInBtn:{
       height: PhoneHeight * 0.05,
@@ -250,7 +254,23 @@ const styles = StyleSheet.create({
         paddingTop:10,
         borderWidth:0,
         flexDirection:'row'
+    },errors:{
+      color: '#ec5341',
+      fontSize: responsiveSize(11),
     }
 });
-
-export default signUp
+const mapStateToProps = (state) => {
+  const { phoneNumberValue,passwordValue, phoneErrorValue, passwordErrorValue } = state.authenticationReducer;
+  return {
+     phoneErrorValue,
+     passwordErrorValue,
+     phoneNumberValue,
+     passwordValue,
+  }
+}
+export default connect(
+  mapStateToProps,
+  {
+    signIn,
+  }
+)(SignIn)

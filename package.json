@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "react-native-community/async-storage",
     "@react-native-community/google-signin": "^5.0.0",
+    "async": "^3.2.0",
     "axios": "^0.21.0",
     "lottie-ios": "3.1.8",
     "lottie-react-native": "^3.5.0",
@@ -27,7 +28,8 @@
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "storage": "^0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

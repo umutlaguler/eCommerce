@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Router, Stack, Scene,Tabs} from 'react-native-router-flux';
+import { Router, Stack, Scene,Tabs, Drawer} from 'react-native-router-flux';
 import {StyleSheet,Image} from 'react-native';
 import { PhoneHeight, PhoneWidth, responsiveSize } from './components/config/env';
 import SignIn from './components/authentication/signIn';
@@ -22,22 +22,23 @@ class RouterComp extends Component {
         
          return (
             <Router>
-            <Stack key="root" hideNavBar >
+            <Stack  key="root" hideNavBar >
                 <Stack key="auth"  >
-                    <Scene hideNavBar key="login" component={SignIn} title="" />
-                    <Scene hideNavBar key="signUp" component={SignUp} title="Register" />
+                    <Scene  hideNavBar key="login" component={SignIn} title="" />
+                    <Scene  hideNavBar key="signUp" component={SignUp} title="Register" />
                     
                 </Stack>
-            <Stack  initial navigationBarStyle={styles.navigationBar} key="main">
+                <Drawer>
+            <Stack initial  navigationBarStyle={styles.navigationBar} key="main">
                             
     <Tabs
-             hideNavBar
+                hideNavBar
                 showLabel={false}
                 labelStyle={styles.label}
                 tabBarStyle={styles.tabs}>
                 <Scene
                     initial
-                    key="anasayfa"
+                    key="index"
                     component={index} 
                     title ="E-TİCARET"
                     icon={({focused}) => (
@@ -68,10 +69,9 @@ class RouterComp extends Component {
                     icon={({focused}) => (
                     <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
                     component={others} />
-                
-    </Tabs>
-                    
-                    <Scene
+
+                </Tabs>
+                <Scene
                             navigationBarStyle={{ backgroundColor: '#FDCA40' }}
                             key="campaignDetail"
                             title="KAMPANYA DETAYI"
@@ -80,19 +80,23 @@ class RouterComp extends Component {
                             key="addresses"
                             title="ADRESLERİM"
                             component={addresses} />
-                        <Scene
+                    <Scene
                             key="favourites"
                             title="FAVORİLERİM"
                             component={favourites} />
-                        <Scene
+                    <Scene
                             key="newProducts"
                             title="NEW PRODUCTS"
                             component={newProducts} /> 
-                        <Scene
+                     
+                    <Scene
                             key="opportunity"
                             title="FIRSAT ÜRÜNLERİ"
                             component={opportunity} />  
-            </Stack>          
+                    
+                    
+            </Stack> 
+            </Drawer>         
             </Stack>
         </Router>
            )

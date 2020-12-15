@@ -1,48 +1,86 @@
 import axios from "axios";
 import { API_BASE } from "../components/config/env";
 import { Actions } from "react-native-router-flux";
-
+import { LogBox } from "react-native";
 
 export const SIGN_UP_CLICK   = "sign_up_click";
 export const SIGN_UP_SUCCESS = "sign_up_success";
 export const SIGN_UP_FAILED  = "sign_up_failed";
 
-export function setSex(male, female) {
-    return (dispatch) => dispatch({type: 'SETSEX', male, female})
-}
+export const SIGN_IN_CLICK        = "sign_in_click";
+export const SIGN_IN_SUCCESS      = "sign_in_success";
+export const SIGN_IN_FAILED       = "sign_in_failed";
 
-export function onChangeSex() {
-    return (dispatch) => dispatch({type: 'CHANGESEX'})
-}
-
-export const signUp = (full_name, email, password,phone,date) => {
-    let data = JSON.stringify({ full_name: full_name, email: email, phone: phone, password: password, date: date,  })
+export const signUp = (fullname, phone, date, email, password, gender) => {
+    let data = JSON.stringify({ fullname: fullname, phone: phone, date: date, email: email, password: password, gender: gender})
     return dispatch => {
         dispatch({
             type: SIGN_UP_CLICK
         })
         console.log("data", data)
         axios({
-            method: "post",
-            url: ` http://localhost:3001/api/v1/users/signup`,
+            method:"POST",
+            url: `${API_BASE}/users/signup`,
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             data: data
         }).then((result) => {
+            console.log("başarılı mı ");
+            console.log("result", result.data)
             if(result.data.data) {
                 dispatch({
                     type: SIGN_UP_SUCCESS,
                     payload: result.data.data
                 })
-                Actions.signIn()
+                Actions.login()
             }
         }).catch((err) => {
+            console.log(err.response.data.errors);
             dispatch({
                 type: SIGN_UP_FAILED,
                 payload: err.response.data.errors
             })
         })
     }
+}
+
+export const signIn = (phone, password) => {
+    let data = JSON.stringify({ phone: phone, password: password })
+    return dispatch => {
+        console.log("tıklandııı");
+        dispatch({
+            type: SIGN_IN_CLICK,
+        })
+        axios({
+            method: "POST",
+            url: `${API_BASE}/users/signin`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: data
+        }).then((result) => {
+            console.log("result", result.data.data)
+            if(result.data.status == "Success") {
+                console.log("giriş başarılı",result.data.data);
+                dispatch({
+                    type: SIGN_IN_SUCCESS,
+                    payload: result.data.data
+                })
+                Actions.index()
+            } else {
+                dispatch({
+                    type: SIGN_IN_FAILED,
+                    payload: result.data.message
+                })
+            }
+        }).catch((err) => {
+            console.log(err.response.data.errors);
+            dispatch({
+                type: SIGN_IN_FAILED,
+                payload: err.response.data.errors ? err.response.data.errors:null
+            })})
+        }
 }
