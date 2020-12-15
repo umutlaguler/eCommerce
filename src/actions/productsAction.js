@@ -1,8 +1,10 @@
 import axios from "axios";
 import { API_BASE } from "../components/config/env";
+
 export const FETCH_CATEGORIES       = "fetch_categories";
 export const FETCH_SUB_CATEGORIES   = "fetch_sub_categories";
 export const FETCH_PRODUCTS         = "fetch_products";
+export const ADD_TO_CART            = "add_to_cart";
 
 export const fetchCategories = (item) => {
     return dispatch => {
@@ -25,6 +27,7 @@ export const fetchCategories = (item) => {
         })
     }
 }
+
 export const fetchSubCategories = (cat_id) => {
     console.log("YETER: ",  cat_id)
     return dispatch => {
@@ -47,6 +50,7 @@ export const fetchSubCategories = (cat_id) => {
         })
     }
 }
+
 export const fetchProducts = (sub_cat_id) => {
     console.log("YETER: ",  sub_cat_id)
     return dispatch => {
@@ -69,9 +73,11 @@ export const fetchProducts = (sub_cat_id) => {
         })
     }
 }
-export function cartAction(type, payload){
+
+export const addToCart = (item) =>{
+    console.log("ürün: ", item)
     return {
-        type: type,
-        payload: payload
-    };
+        type: ADD_TO_CART,
+        payload: item
+      };
 }

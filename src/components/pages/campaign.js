@@ -26,8 +26,8 @@ componentDidMount() {
     let fontName = 'Segoe UI'
     GlobalFont.applyGlobal(fontName)
 }
-  campaignRenderItem=({item}) => {
-    return(
+campaignRenderItem=({item}) => {
+  return(
     <View style = {styles.campaignBox}>
       <TouchableOpacity 
       onPress={() => Actions.campaignDetail()}
@@ -78,17 +78,11 @@ const styles = StyleSheet.create({
     height: PhoneHeight * 0.8,//dokunma
     alignSelf: "center",
   },
-  campaigns:{
-    // width:PhoneWidth * 0.9,
-  },
   campaignBox:{
     width:PhoneWidth * 0.9,
     paddingVertical:'5%',
     borderRadius: 10,
     alignSelf: "center",
-  },
-  campaignTouchable:{
-
   },
   campaignWrapper:{
     height:PhoneHeight*0.2,
@@ -100,5 +94,4 @@ const styles = StyleSheet.create({
     width:PhoneWidth*0.9,
     borderRadius:20, 
   }
-
 })

@@ -20,16 +20,15 @@ export default class others extends Component {
     return (
     <View style = {styles.container}> 
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Bilgilerim</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Önceki Siparişlerim</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Adreslerim</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Kartlarım</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Uygulama Hakkında</Text></TouchableOpacity>
-        <View style = {styles.logOutBtn}>
-        <TouchableOpacity style={styles.seperateLogOut}><Text style={styles.logOutbtnTxt}>Çıkış yap</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Bilgilerim</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Önceki Siparişlerim</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Adreslerim</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Kartlarım</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Uygulama Hakkında</Text></TouchableOpacity>
+          <View style = {styles.logOutBtn}>
+            <TouchableOpacity style={styles.seperateLogOut}><Text style={styles.logOutbtnTxt}>Çıkış yap</Text></TouchableOpacity>
+          </View>
       </View>
-      </View>
-     
     </View>
     );
   }
@@ -75,7 +74,5 @@ const styles = StyleSheet.create({
     fontSize:20,
     textAlign:'center',
     alignSelf:'center',
-
   }
-
 })

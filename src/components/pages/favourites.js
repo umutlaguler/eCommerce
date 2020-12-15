@@ -1,22 +1,12 @@
-
 import React, { Component } from 'react';
 import { View, Text, StyleSheet,TouchableOpacity, Image} from 'react-native';
 import { PhoneWidth,PhoneHeight, responsiveSize } from '../../components/config/env';
 import { FlatList } from 'react-native-gesture-handler';
-import { fetchCategories, fetchSubCategories, fetchProducts, cartAction} from '../../actions/productsAction';
+import { fetchCategories, fetchSubCategories, fetchProducts, addToCart } from '../../actions/productsAction';
 import { connect } from 'react-redux';
 import {Tabs} from '../../router';
 import { Actions } from 'react-native-router-flux';
 
-const data = [
-  { id:"1", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"2", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"3", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"4", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"5", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"6", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"7", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-]
 class favourites extends Component {
   componentWillMount() {
     this.props.fetchSubCategories(this.props.cat_id)
@@ -27,85 +17,72 @@ class favourites extends Component {
     };
 
   }
- 
-  productRenderItem = ({ item }) => {
-    
-    return(
 
-      <View style= {styles.allProducts}>
+  productRenderItem = ({ item }) => {
+    return(
+  <View style= {styles.allProducts}>
         <TouchableOpacity style= {styles.productContainer}>
-          <View style= {styles.imageContainer}>
-          <Image style= {styles.productImages} 
-                 source={{
-                  uri : item.image
-                }}/>
-          </View>
-          <View style= {styles.productInfo} >
-          <Text style= {{fontSize: responsiveSize(13)}}>{item.title}</Text>
-          <Text>{item.desc}</Text>
-          </View>
-          <View style= {styles.priceTextContainer}>
-          <Text style= {styles.priceTxt}> {item.price} {item.amount}</Text>
-          </View>
-      </TouchableOpacity> 
-    <View style= {styles.plusButtonContainer}>
-      <TouchableOpacity
-        onPress={ this.props.cartAction('Add',item)}      
-      >
-        <Image 
-          style= {styles.plusIcon}
-          source= {require("../../images/plus.png")} />
-      </TouchableOpacity>
-    </View>
-    
-      </View>
-     
-              )}
-            
-  
+            <View style= {styles.imageContainer}>
+               <Image style= {styles.productImages} 
+                      source={{uri : item.image}} />
+            </View>
+            <View style= {styles.productInfo} >
+               <Text style= {{fontSize: responsiveSize(13)}}>{item.title}</Text>
+               <Text>{item.desc}</Text>
+            </View>
+            <View style= {styles.priceTextContainer}>
+               <Text style= {styles.priceTxt}> {item.price} {item.amount}</Text>
+            </View>
+        </TouchableOpacity> 
+        <View style= {styles.plusButtonContainer}>
+          <TouchableOpacity 
+              onPress= {() => this.props.addToCart(item) } >
+            <Image 
+              style= {styles.plusIcon}
+              source= {require("../../images/plus.png")} />
+          </TouchableOpacity>
+        </View>
+  </View>
+    )
+  }
 
   subCategoriesRenderItem = ({item}) => {
     return(
       <View>
-      <TouchableOpacity   
-          onPress={() => this.props.fetchProducts(item.id)}
-          style= {styles.horizontalCategoriesBtn}>
-      <Text style= {styles.subCategoriesName}>{item.title}</Text>
-    </TouchableOpacity>
-    </View>
+        <TouchableOpacity   
+            onPress={() => this.props.fetchProducts(item.id)}
+            style= {styles.horizontalCategoriesBtn}>
+            <Text style= {styles.subCategoriesName}>{item.title}</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 
   render() {
-    const { subCategoriesValue, productsValue } = this.props;
+    const { subCategoriesValue, productsValue, products } = this.props;
+    console.log("ürün arrayi: ", products);
     return (
       <View style= {styles.container}>
-      <View>
-        <FlatList
-              showsHorizontalScrollIndicator= {false}
-              horizontal
-              data= {subCategoriesValue}
-              renderItem= {this.subCategoriesRenderItem}
-              keyExtractor= {item => item.id}/> 
-     </View>
-      
-     <View >
-        <FlatList
-              bounces={true}
-              numColumns={3}
-              data={productsValue}
-              renderItem={this.productRenderItem}
-              keyExtractor={item => item.id}
-            /> 
-            
-    </View>
-   
-    </View>  
-        
+        <View>
+          <FlatList
+            showsHorizontalScrollIndicator= {false}
+            horizontal
+            data= {subCategoriesValue}
+            renderItem= {this.subCategoriesRenderItem}
+            keyExtractor= {item => item.id}/> 
+        </View>
+        <View>
+          <FlatList
+            bounces={true}
+            numColumns={3}
+            data={productsValue}
+            renderItem={this.productRenderItem}
+            keyExtractor={item => item.id}/>          
+        </View>
+      </View>  
     );
   }
 }
-
 const styles = StyleSheet.create({
   container:{
     flex: 1,
@@ -186,19 +163,20 @@ const styles = StyleSheet.create({
   }
 })
 const mapStateToProps = state => {
-  const { categoriesValue, subCategoriesValue, productsValue  } = state.productsReducer;
+  const { categoriesValue, subCategoriesValue, productsValue, products  } = state.productsReducer;
   return {
     categoriesValue,
     subCategoriesValue,
-    productsValue
+    productsValue,
+    products
   }
 }
-
 export default connect(
   mapStateToProps,
   {
     fetchCategories,
     fetchSubCategories,
-    fetchProducts
+    fetchProducts,
+    addToCart
   }
 )(favourites)

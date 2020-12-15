@@ -5,5 +5,4 @@ import productsReducer from '../reducers/productsReducer';
 export default combineReducers({
     authenticationReducer,
     productsReducer,
-   
 })

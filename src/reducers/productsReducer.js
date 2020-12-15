@@ -2,20 +2,17 @@ import {
     FETCH_CATEGORIES,
     FETCH_SUB_CATEGORIES,
     FETCH_PRODUCTS,
+    ADD_TO_CART
 } from '../actions/productsAction'
-
 const INITIAL_STATE =  {
     categoriesValue: [],
     subCategoriesValue: [],
     productsValue: [],
     cat_id: "",
-    cartList : []
+    products: [],
 }
-
-export default function cartReducer(state=INITIAL_STATE, action){
-
-    let updatedList = state.cartList;
-    switch(action.type){
+export default ( state = INITIAL_STATE, action) => {
+    switch (action.type){
         case FETCH_CATEGORIES:
             return {
                 ...state,
@@ -28,33 +25,16 @@ export default function cartReducer(state=INITIAL_STATE, action){
                 subCategoriesValue: action.payload,
             }
         case FETCH_PRODUCTS:
-            console.log("selin icin ", action.payload)
             return {
                 ...state,
                 productsValue: action.payload
             }
-        case 'Add':
-            if (updatedList[action.payload.id]===undefined){
-                updatedList[action.payload.id] = action.payload;
-                updatedList[action.payload.id].count = 1;
-            } else {
-                updatedList[action.payload.id].count += 1;
+        case ADD_TO_CART:
+            return { 
+                ...state,
+                products: state.products.concat(action.payload)
             }
-            return {
-                ...state,
-                cartList: updatedList
-            };
-            break;
-        case 'Remove':
-            delete(updatedList[action.payload]);
-            return {
-                ...state,
-                cartList: updatedList
-            };
-            return state;
-            break;
         default:
             return state;
-            break;
+        }
     }
-}

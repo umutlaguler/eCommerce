@@ -4,30 +4,25 @@ import { PhoneWidth,PhoneHeight, responsiveSize } from '../../components/config/
 import { FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { color } from 'react-native-reanimated';
-
-const data = [
-  { id:"1", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
-  { id:"2", productName: "JELLY", productDetail: "Strawberry", uri:"https://envato-shoebox-0.imgix.net/1bc1/83fc-c294-4461-a5a1-4e1c3fed951f/IMG_2188.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=1200&s=95d9c3862638f4d7b0c05f8ebd2f57af"},
- ]
-
-export default class cart extends Component {
+ 
+  class cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
     };
   }
-cartRenderItem = ({ item }) => {
+ cartRenderItem = ({ item }) => {
     return(
 <View style= {styles.allProducts}>
   <View style= {styles.productContainer}>
     <View style= {styles.imageContainer}>
           <Image style= {styles.productImages} 
                 source={{
-                  uri : item.uri
+                  uri : item.image
                 }}/>  
           <View style= {styles.textInfoContainer}>
-                <Text style= {styles.productNameTxt}>{item.productName}</Text>
-                <Text style= {styles.priceTxt}> 55₺ </Text> 
+                <Text style= {styles.productNameTxt}>{item.title}</Text>
+                <Text style= {styles.priceTxt}> {item.price} {item.amount} </Text>
           </View>  
       <View style= {styles.plusAndMinusContainer}>  
           <View style= {styles.plusButtonContainer}>
@@ -60,12 +55,14 @@ cartRenderItem = ({ item }) => {
     )
   }
   render() {
+    const {products} = this.props;
+    console.log("sepetteki ürünler: ", products)
     return (
       <View style= {styles.container}>
         <FlatList
               bounces={true}
               numColumns={1}
-              data={data}
+              data={products}
               renderItem={this.cartRenderItem}
               keyExtractor={item => item.id}
             /> 
@@ -134,12 +131,12 @@ const styles = StyleSheet.create({
     },
     minusContainer:{
       borderWidth: 0,
-      position:'absolute',
-      marginBottom:PhoneHeight*0.3,//- yi yukarı cıkarabilmek için yazıldı başka bir yol bulamadım. Muhtemelen vardır. 
+      marginBottom: PhoneHeight * 0.3,//- yi yukarı cıkarabilmek için yazıldı başka bir yol bulamadım. Muhtemelen vardır. 
       width: PhoneWidth * 0.075,
       height: PhoneHeight * 0.025,
       paddingHorizontal:7,//yatayda hafif bosluk verir ki sağdaki çirkin görünüm olmasın 
       justifyContent: "center",
+      position: "absolute"
     },
     deleteContainer:{
       height: PhoneHeight * 0.027,
@@ -177,3 +174,17 @@ const styles = StyleSheet.create({
       fontSize:responsiveSize(17)
       }
     })
+
+    const mapStateToProps = state => {
+      const { products  } = state.productsReducer;
+      return {
+        products
+      }
+    }
+    
+    export default connect(
+      mapStateToProps,
+      {
+ 
+      }
+    )(cart)

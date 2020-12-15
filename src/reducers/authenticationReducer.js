@@ -44,7 +44,6 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
         case SIGN_IN_CLICK:
             return {
                 ...state,
-               
             }
         case SIGN_IN_SUCCESS:
             console.log("başarılı giriş ");
@@ -52,20 +51,16 @@ const authenticationReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 phoneErrorValue: "",
                 passwordErrorValue: "",
-               
             }
         case SIGN_IN_FAILED:
             console.log("hatalı giriş yapma");
             return {
                 ...state,
                 phoneErrorValue: action.payload != null ? action.payload.phone:null,
-                passwordErrorValue: action.payload != null ? action.payload.password:"Lütfen telefon veya şifrenizi kontrol ediniz.",
-                
+                passwordErrorValue: action.payload != null ? action.payload.password:"Lütfen telefon veya şifrenizi kontrol ediniz.",  
             }
-        
             default:
                 return state;
-    
           }
         }
         export default persistReducer(persistConfig, authenticationReducer);

@@ -25,80 +25,75 @@ class RouterComp extends Component {
             <Stack  key="root" hideNavBar >
                 <Stack key="auth"  >
                     <Scene  hideNavBar key="login" component={SignIn} title="" />
-                    <Scene  hideNavBar key="signUp" component={SignUp} title="Register" />
-                    
+                    <Scene  hideNavBar key="signUp" component={SignUp} title="Register" />  
                 </Stack>
                 <Drawer>
-            <Stack initial  navigationBarStyle={styles.navigationBar} key="main">
-                            
+            <Stack initial  navigationBarStyle={styles.navigationBar} key="main">              
     <Tabs
-                hideNavBar
-                showLabel={false}
-                labelStyle={styles.label}
-                tabBarStyle={styles.tabs}>
-                <Scene
-                    initial
-                    key="index"
-                    component={index} 
-                    title ="E-TİCARET"
-                    icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/homepageColorful.png'):require('./images/homepage.png')} />)} />
-                <Scene
-                    key="diet"
-                    title="ARAMA"
-                    icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/searchColorful.png'):require('./images/search.png')} />)}
-                    component={search} />
-                <Scene
-                    key="cart"
-                    title="SEPETİM"
-                    icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/shoppingCartColorful.png'):require('./images/shoppingCart.png')} />)}
-                    component={cart} />
-                
-                <Scene
-                    key="campaign"
-                    title="KAMPANYALAR"
-                    icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/megaPhoneColorful.png'):require('./images/megaPhone.png')} />)}
-                    component={campaign} />
-                <Scene
-                    navigationBarStyle={{ backgroundColor: '#FE5F55' }}
-                    key="others"
-                    title="DİĞER"
-                    icon={({focused}) => (
-                    <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
-                    component={others} />
+            hideNavBar
+            showLabel={false}
+            labelStyle={styles.label}
+            tabBarStyle={styles.tabs}>
+            <Scene
+                initial
+                key="index"
+                component={index} 
+                title ="E-TİCARET"
+                icon={({focused}) => (
+                <Image style={styles.tabIcon} source={focused ? require('./images/homepageColorful.png'):require('./images/homepage.png')} />)} />
+            <Scene
+                key="diet"
+                title="ARAMA"
+                icon={({focused}) => (
+                <Image style={styles.tabIcon} source={focused ? require('./images/searchColorful.png'):require('./images/search.png')} />)}
+                component={search} />
+            <Scene
+                key="cart"
+                title="SEPETİM"
+                icon={({focused}) => (
+                <Image style={styles.tabIcon} source={focused ? require('./images/shoppingCartColorful.png'):require('./images/shoppingCart.png')} />)}
+                component={cart} />
+            
+            <Scene
+                key="campaign"
+                title="KAMPANYALAR"
+                icon={({focused}) => (
+                <Image style={styles.tabIcon} source={focused ? require('./images/megaPhoneColorful.png'):require('./images/megaPhone.png')} />)}
+                component={campaign} />
+            <Scene
+                navigationBarStyle={{ backgroundColor: '#FE5F55' }}
+                key="others"
+                title="DİĞER"
+                icon={({focused}) => (
+                <Image style={styles.tabIcon} source={focused ? require('./images/hamburgerColorful.png'):require('./images/hamburger.png')} />)}
+                component={others} />
+    </Tabs>
 
-                </Tabs>
-                <Scene
-                            navigationBarStyle={{ backgroundColor: '#FDCA40' }}
-                            key="campaignDetail"
-                            title="KAMPANYA DETAYI"
-                            component={campaignDetail} />
-                    <Scene
-                            key="addresses"
-                            title="ADRESLERİM"
-                            component={addresses} />
-                    <Scene
-                            key="favourites"
-                            title="FAVORİLERİM"
-                            component={favourites} />
-                    <Scene
-                            key="newProducts"
-                            title="NEW PRODUCTS"
-                            component={newProducts} /> 
-                     
-                    <Scene
-                            key="opportunity"
-                            title="FIRSAT ÜRÜNLERİ"
-                            component={opportunity} />  
-                    
-                    
-            </Stack> 
+            <Scene
+                navigationBarStyle={{ backgroundColor: '#FDCA40' }}
+                key="campaignDetail"
+                title="KAMPANYA DETAYI"
+                component={campaignDetail} />
+            <Scene
+                key="addresses"
+                title="ADRESLERİM"
+                component={addresses} />
+            <Scene
+                key="favourites"
+                title="FAVORİLERİM"
+                component={favourites} />
+            <Scene
+                key="newProducts"
+                title="NEW PRODUCTS"
+                component={newProducts} />  
+            <Scene
+                key="opportunity"
+                title="FIRSAT ÜRÜNLERİ"
+                component={opportunity} />    
+             </Stack> 
             </Drawer>         
-            </Stack>
-        </Router>
+        </Stack>
+    </Router>
            )
        }
    }
@@ -120,10 +115,6 @@ class RouterComp extends Component {
     labelStyle: {
         fontSize: 12,
         color: 'red',
-    
       },
-    
-    
-   
 })
 export default RouterComp;
