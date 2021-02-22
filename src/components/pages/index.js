@@ -22,7 +22,7 @@ const PhoneHeight = Dimensions.get("window").height;
 const numColumns = 4;
 
  class index extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.fetchCategories()
   }
   constructor(){
@@ -44,102 +44,124 @@ const numColumns = 4;
   cardRenderItem = ({ item }) => {
     return (
       <TouchableOpacity style = {styles.seperateCards}>
-        <View style={[styles.cardWrapper, { backgroundColor: item.backgroundColor }]}>
-          <Image style={{ borderRadius:26, height: PhoneHeight * 0.25, width: PhoneWidth * 0.8,}}
-                source={{uri : item.uri}}/>
-          <Text style={styles.cardTitle}> {item.title} </Text>
-        </View>
+      <View style={[styles.cardWrapper, { backgroundColor: item.backgroundColor }]}>
+      <Image
+                    style={{ borderRadius:26, height: PhoneHeight * 0.25, width: PhoneWidth * 0.8,}}
+                        source={{
+                          uri : item.uri
+                        }}
+                    />
+        <Text style={styles.cardTitle}> {item.title} </Text>
+      </View>
       </TouchableOpacity>
       
     )
   }
-  catRenderItem = ({ item }) => {
-    return (
-      <View style = {styles.allCategories}>
-        <TouchableOpacity 
-          onPress={() => this.props.fetchCategories(item.id) & Actions.favourites({cat_id: item.id})}
-          style = {styles.seperateCategoriesBtn}>
-          <View style={[styles.catWrapper, { backgroundColor: item.backgroundColor }]}>
-              <Image style={{ height: PhoneHeight * 0.1, width: PhoneWidth * 0.21, borderRadius: 10}}
-                     source={{uri : item.image}}/>
+    catRenderItem = ({ item }) => {
+      return (
+        <View style = {styles.allCategories}>
+          <TouchableOpacity 
+            onPress={() => this.props.fetchCategories(item.id) & Actions.favourites({cat_id: item.id})
+            }
+             style = {styles.seperateCategoriesBtn}>
+            <View style={[styles.catWrapper, { backgroundColor: item.backgroundColor }]}>
+              <Image
+              style={{ height: PhoneHeight * 0.1, width: PhoneWidth * 0.21, borderRadius: 10}}
+              source={{
+                uri : item.image
+              }}/>
               <Text style={styles.catTitle}> {item.title} </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+            </View>
+          </TouchableOpacity>
+        </View>
       )
     }
-  render() {
-    const { categoriesValue, cat_id} = this.props;
-    return (    
+    render() {
+      // console.log("categ id: ", this.state.cat_id)
+      const { categoriesValue } = this.props;
+      return (    
     <View style={styles.container}> 
-      <TouchableOpacity 
-      style={styles.adressBtn}
-      onPress={() => Actions.addresses()}>
-          <Text style={styles.textAdress}>
-            ProjectXR Yenikent Sabuncu Sitesi DÃ¶ÅŸeme 
-          </Text>
-          <Image
-            style={styles.arrowDown}
-            source={require('../../images/arrowDown.png')}/>
-      </TouchableOpacity>
-      <View style={styles.allCards}>
-          <FlatList style={styles.allCards}
-          keyExtractor={(item) => item.id}
-          data={data}
-          style={{ maxHeight: PhoneHeight * 0.23 }}
-          horizontal
-          bounces={false}
-          snapToAlignment={"center"}
-          decelerationRate={0}
-          snapToInterval={PhoneWidth - 60} // default -60
-          contentInset={{
-            top: 0,
-            left: 30, // default 30
-            bottom: 0,
-            right: 30, // default 30
-          }}
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          renderItem={this.cardRenderItem} />  
-          <View style={styles.mainButtons}>
             <TouchableOpacity 
-             onPress={() => Actions.opportunity()}
-             style={styles.opportunityBtn}>
+            style={styles.adressBtn}
+            onPress={() => Actions.addresses()}
+            >
+            <Text style={styles.textAdress}>
+                    ProjectXR Yenikent Sabuncu Sitesi Döşeme 
+                </Text>
+            <Image
+           style={styles.arrowDown}
+           source={require('../../images/arrowDown.png')}
+         />
+            </TouchableOpacity>
+            {/* <Text>{this.props.piecesOfProducts}</Text> */}
+            <View style = {styles.shopInfos}>
+
+            </View>
+    
+        <View style={styles.allCards}>
+           <FlatList style={styles.allCards}
+            keyExtractor={(item) => item.id}
+            data={data}
+            style={{ maxHeight: PhoneHeight * 0.23 }}
+            horizontal
+            bounces={false}
+            snapToAlignment={"center"}
+            decelerationRate={0}
+            snapToInterval={PhoneWidth - 60} // default -60
+            contentInset={{
+              top: 0,
+              left: 30, // default 30
+              bottom: 0,
+              right: 30, // default 30
+            }}
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            renderItem={this.cardRenderItem} />
+            
+        <View style={styles.mainButtons}>
+            <TouchableOpacity 
+            // onPress={() => Actions.opportunity()}
+            style={styles.opportunityBtn}>
                 <Text >fırsat</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-             onPress={() => Actions.favourites()}
-             style={styles.favouriteBtn}>
+            // onPress={() => Actions.favourites()}
+            style={styles.favouriteBtn}>
                 <Text>favori</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-             onPress={() => Actions.newProducts()}
-             style={styles.newProductsBtn}>
+            // onPress={() => Actions.newProducts()}
+            style={styles.newProductsBtn}>
                 <Text>yeni</Text>
             </TouchableOpacity>
-          </View>
-          <Text style={{color:'grey', margin:4.5}}>Kategoriler</Text>
-          <View style = {styles.allCategories}>
-              <FlatList style = {styles.listingCategories}
-              scrollEnabled
-              data={categoriesValue}  
-              numColumns = {numColumns}
-              renderItem={this.catRenderItem}
-              bounces={false}
-              // onEndReached={}//dursun lazyloading için kullanıcam
-              // onEndReachedThreshold = {7}
-              contentContainerStyle
-              showsHorizontalScrollIndicator={false}
-              />
-          </View>
-      </View>   
-    </View>     
+        </View>
+        <Text style={{color:'grey', margin:4.5}}>Kategoriler</Text>
+         <View style = {styles.allCategories}>
+                <FlatList style = {styles.listingCategories}
+                scrollEnabled
+                data={categoriesValue}  
+                numColumns = {numColumns}
+                renderItem={this.catRenderItem}
+                bounces={false}
+                // onEndReached={}
+                // onEndReachedThreshold = {7}
+                contentContainerStyle
+                showsHorizontalScrollIndicator={false}
+                />
+              
+            </View>
+            
+            </View>   
+     </View>
+                
       )
     }
   }
+  
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+
     },
     adressBtn:{
       alignSelf:'center',
@@ -148,6 +170,7 @@ const numColumns = 4;
       borderWidth:0,
       flexDirection:'row',
       backgroundColor:'#f6f8fa'
+
     },
     allCards:{
       width:PhoneWidth * 1,
@@ -210,10 +233,11 @@ const numColumns = 4;
       flexDirection:'row',
     },
     mainButtons:{
-      flexDirection:'row',
-      justifyContent:'space-around',
-      paddingHorizontal:20,
-      marginTop:5
+           flexDirection:'row',
+           justifyContent:'space-around',
+           paddingHorizontal:20,
+           marginTop:5
+
     },
     allCategories:{ 
       paddingVertical:7,
@@ -223,6 +247,9 @@ const numColumns = 4;
       flex:1,
       width:PhoneWidth*0.9,
       height: PhoneHeight * 0.15
+    },
+    listingCategories:{
+
     },
     seperateCategoriesBtn:{
       backgroundColor:'white',
@@ -236,17 +263,24 @@ const numColumns = 4;
       alignSelf:"center",
       fontSize:12,
     }
+   
+    
   })
+
   const mapStateToProps = state => {
-    const { categoriesValue, cat_id } = state.productsReducer;
+    const { categoriesValue, cat_id,piecesOfProducts } = state.productsReducer;
+
     return {
       categoriesValue,
-      cat_id
+      cat_id,
+      piecesOfProducts
     }
   }
+  
   export default connect(
     mapStateToProps,
     {
       fetchCategories,
+      
     }
   )(index)

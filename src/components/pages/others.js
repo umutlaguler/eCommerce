@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react';
-import { View, Text,StyleSheet } from 'react-native';
+import { View, Text,StyleSheet, ActionSheetIOS } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PhoneHeight, PhoneWidth } from '../config/env';
 import GlobalFont from 'react-native-global-font';
+import { Actions } from 'react-native-router-flux';
 
 export default class others extends Component {
   constructor(props) {
@@ -20,9 +21,13 @@ export default class others extends Component {
     return (
     <View style = {styles.container}> 
       <View style={styles.buttons}>
-          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Bilgilerim</Text></TouchableOpacity>
+          <TouchableOpacity 
+            onPress={() => Actions.myProfile()}         
+            style={styles.seperateBtn}><Text style={styles.btnTxt}>Bilgilerim</Text></TouchableOpacity>
           <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Önceki Siparişlerim</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Adreslerim</Text></TouchableOpacity>
+          <TouchableOpacity 
+            onPress={() => Actions.addresses()}
+            style={styles.seperateBtn}><Text style={styles.btnTxt}>Adreslerim</Text></TouchableOpacity>
           <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Kartlarım</Text></TouchableOpacity>
           <TouchableOpacity style={styles.seperateBtn}><Text style={styles.btnTxt}>Uygulama Hakkında</Text></TouchableOpacity>
           <View style = {styles.logOutBtn}>

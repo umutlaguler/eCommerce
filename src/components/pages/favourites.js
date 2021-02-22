@@ -41,6 +41,7 @@ class favourites extends Component {
               style= {styles.plusIcon}
               source= {require("../../images/plus.png")} />
           </TouchableOpacity>
+          
         </View>
   </View>
     )
@@ -54,6 +55,7 @@ class favourites extends Component {
             style= {styles.horizontalCategoriesBtn}>
             <Text style= {styles.subCategoriesName}>{item.title}</Text>
         </TouchableOpacity>
+
       </View>
     )
   }
@@ -71,6 +73,7 @@ class favourites extends Component {
             renderItem= {this.subCategoriesRenderItem}
             keyExtractor= {item => item.id}/> 
         </View>
+        
         <View>
           <FlatList
             bounces={true}
@@ -79,6 +82,7 @@ class favourites extends Component {
             renderItem={this.productRenderItem}
             keyExtractor={item => item.id}/>          
         </View>
+
       </View>  
     );
   }
@@ -163,12 +167,13 @@ const styles = StyleSheet.create({
   }
 })
 const mapStateToProps = state => {
-  const { categoriesValue, subCategoriesValue, productsValue, products  } = state.productsReducer;
+  const { categoriesValue, subCategoriesValue, productsValue, products ,piecesOfProducts } = state.productsReducer;
   return {
     categoriesValue,
     subCategoriesValue,
     productsValue,
-    products
+    products,
+    piecesOfProducts
   }
 }
 export default connect(

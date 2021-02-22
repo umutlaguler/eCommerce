@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image,Button,Alert} from 'react-native';
 import { PhoneWidth,PhoneHeight, responsiveSize } from '../../components/config/env';
+import { removeToCart,removeAllCart, addToCart } from '../../actions/productsAction';
 import { FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { color } from 'react-native-reanimated';
+import { Actions } from 'react-native-router-flux';
  
   class cart extends Component {
   constructor(props) {
@@ -11,6 +13,8 @@ import { color } from 'react-native-reanimated';
     this.state = {
     };
   }
+ 
+
  cartRenderItem = ({ item }) => {
     return(
 <View style= {styles.allProducts}>
@@ -42,7 +46,8 @@ import { color } from 'react-native-reanimated';
               </View>  
           </View> 
           <View style= {styles.deleteContainer}>
-            <TouchableOpacity >
+            <TouchableOpacity
+             onPress= {() => this.props.removeToCart(item) } >
               <Image 
                 style= {styles.deleteIcon}
                 source= {require("../../images/x.png")}/>
@@ -55,10 +60,40 @@ import { color } from 'react-native-reanimated';
     )
   }
   render() {
-    const {products} = this.props;
-    console.log("sepetteki ürünler: ", products)
+  const createTwoButtonAlert = () =>
+  Alert.alert(
+    "SEPET",
+    "Sepetinizdeki tüm ürünler boşaltılacak",
+    [
+      {
+        text: "Hayır",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "Evet", onPress :() =>{this.props.removeAllCart()} }
+    ],
+    { cancelable: false }
+  );
+    
+    const {products, totalAmount} = this.props;
+    console.log("sepetteki Ã¼rÃ¼nler: ", products)
     return (
       <View style= {styles.container}>
+      {     //sepette Ã¼rÃ¼n bulunmadÄ±ÄŸÄ± durumlarÄ± kontrol eder tasarÄ±mÄ± eksik yapÄ±lacak 
+        this.props.products.length > 0 ?
+       <Text> </Text> 
+        :<Text style= {styles.cartIsEmptyTxt}>Sepetinizde ürün bulunmamaktadır. </Text> 
+      }
+      <View style={styles.deleteAllContainer}>
+          <TouchableOpacity 
+            onPress= {createTwoButtonAlert}
+            style= {styles.deleteAllBtn}> 
+           <Image 
+            style= {styles.deleteAllPhoto}
+            source= {require("../../images/trash.png")}/>
+          </TouchableOpacity>
+        </View>
+        
         <FlatList
               bounces={true}
               numColumns={1}
@@ -66,8 +101,15 @@ import { color } from 'react-native-reanimated';
               renderItem={this.cartRenderItem}
               keyExtractor={item => item.id}
             /> 
+        <View style= {styles.totalBtnContainer}>
+          <View style= {styles.totalCartBtn}> 
+            <Text style= {styles.totalTxt}>Toplam: {totalAmount}</Text>
+          </View>
+        </View>
         <View style= {styles.confirmBtnContainer}>
-          <TouchableOpacity style= {styles.confirmCartBtn}> 
+          <TouchableOpacity 
+              onPress= {() => Actions.payment()}
+              style= {styles.confirmCartBtn}> 
             <Text style= {styles.confirmTxt}>Sepeti Onayla</Text>
           </TouchableOpacity>
         </View>
@@ -78,6 +120,11 @@ import { color } from 'react-native-reanimated';
 const styles = StyleSheet.create({
     container:{
       flex: 1,
+    },
+    sureModal: {
+      flex: 1,
+      justifyContent: "space-around",
+      alignItems: "center"
     },
     productContainer:{
       alignSelf: "center",
@@ -95,17 +142,17 @@ const styles = StyleSheet.create({
       borderRadius: 24,
       borderColor: "#00f0b8",
     },
-      //ürün adı ve fiyat bilgisinin kutusu
+      //Ã¼rÃ¼n adÄ± ve fiyat bilgisinin kutusu
     textInfoContainer:{
       borderWidth:0,
       height: PhoneHeight * 0.1,
       width: PhoneWidth * 0.24,
-      paddingHorizontal:10,//sağındaki foto ile arasına 10px boşluk verir
-      justifyContent: "center",//dikeyde yazıyı ve fiyatı ortalar
+      paddingHorizontal:10,//saÄŸÄ±ndaki foto ile arasÄ±na 10px boÅŸluk verir
+      justifyContent: "center",//dikeyde yazÄ±yÄ± ve fiyatÄ± ortalar
     },
-    plusAndMinusContainer:{//artı ve eksi sembollerinin kutusunu bir view e aldım ki marginsiz ortalayabileyim diye
-      flexDirection:'row',// artı, eksi, ve çarpıyı yan yana dizer.
-      marginTop: PhoneHeight*0.03//3'ünü de dikeyde ortalar. 
+    plusAndMinusContainer:{//artÄ± ve eksi sembollerinin kutusunu bir view e aldÄ±m ki marginsiz ortalayabileyim diye
+      flexDirection:'row',// artÄ±, eksi, ve Ã§arpÄ±yÄ± yan yana dizer.
+      marginTop: PhoneHeight*0.03//3'Ã¼nÃ¼ de dikeyde ortalar. 
     },
     allProducts:{
       borderWidth:0,
@@ -115,7 +162,7 @@ const styles = StyleSheet.create({
     },
     imageContainer:{
       borderRadius: 24,
-      flexDirection:'row',//ımage containerın içindeki her şeyi yatay dizer!!!
+      flexDirection:'row',//Ä±mage containerÄ±n iÃ§indeki her ÅŸeyi yatay dizer!!!
     },
     productImages:{
       width: PhoneWidth * 0.2,
@@ -125,16 +172,16 @@ const styles = StyleSheet.create({
     plusContainer:{
       borderWidth: 0,
       height: PhoneHeight * 0.025,
-      paddingHorizontal:7,//yatayda hafif bosluk verir ki sağdaki çirkin görünüm olmasın 
-      justifyContent: "center",//artı butonunu dikeyde ortalar
-      alignItems: "flex-end"//artı butonunun her şeyi (sağa yaslar)!!!
+      paddingHorizontal:7,//yatayda hafif bosluk verir ki saÄŸdaki Ã§irkin gÃ¶rÃ¼nÃ¼m olmasÄ±n 
+      justifyContent: "center",//artÄ± butonunu dikeyde ortalar
+      alignItems: "flex-end"//artÄ± butonunun her ÅŸeyi (saÄŸa yaslar)!!!
     },
     minusContainer:{
       borderWidth: 0,
-      marginBottom: PhoneHeight * 0.3,//- yi yukarı cıkarabilmek için yazıldı başka bir yol bulamadım. Muhtemelen vardır. 
+      marginBottom: PhoneHeight * 0.3,//- yi yukarÄ± cÄ±karabilmek iÃ§in yazÄ±ldÄ± baÅŸka bir yol bulamadÄ±m. Muhtemelen vardÄ±r. 
       width: PhoneWidth * 0.075,
       height: PhoneHeight * 0.025,
-      paddingHorizontal:7,//yatayda hafif bosluk verir ki sağdaki çirkin görünüm olmasın 
+      paddingHorizontal:7,//yatayda hafif bosluk verir ki saÄŸdaki Ã§irkin gÃ¶rÃ¼nÃ¼m olmasÄ±n 
       justifyContent: "center",
       position: "absolute"
     },
@@ -159,32 +206,66 @@ const styles = StyleSheet.create({
       height: responsiveSize(12),
     },
     confirmCartBtn:{
-      borderWidth: 2,
-      borderColor:"#00f0b8",
+      borderWidth: 0,
+      backgroundColor: "#00f0b8",
+      // borderColor:"#00f0b8",
       width: PhoneWidth * 0.5,
       height: PhoneHeight * 0.06,
       borderRadius: 50,
-      marginBottom:PhoneHeight*0.02,//aşağıyla arasına cok hafif bosluk vermeye yarar
+      marginBottom: PhoneHeight * 0.02,//aÅŸaÄŸÄ±yla arasÄ±na cok hafif bosluk vermeye yarar
       alignSelf: "center",//kendini ort.
-      alignItems:'center',//içindeki yazıyı yatayda ort.
-      justifyContent:'center'//içindeki yazıyı dikeyde ort.
+      alignItems:'center',//iÃ§indeki yazÄ±yÄ± yatayda ort.
+      justifyContent:'center'//iÃ§indeki yazÄ±yÄ± dikeyde ort.
+    },
+    totalCartBtn:{
+      borderWidth: 1,
+      width: PhoneWidth * 0.35,
+      height: PhoneHeight * 0.05,
+      borderRadius: 50,
+      borderColor: "#00f0b8",
+      justifyContent:'center',//iÃ§indeki yazÄ±yÄ± dikeyde ort.
+      marginBottom: PhoneHeight * 0.01,
+      marginLeft: PhoneHeight * 0.3
     },
     confirmTxt:{
-      color:"#00f0b8",
+      color:"#fff",
       fontSize:responsiveSize(17)
-      }
+      },
+    totalTxt:{
+      color:"#000",
+      fontSize:responsiveSize(13),
+      marginLeft: PhoneHeight * 0.01
+    },
+    deleteAllPhoto:{
+      width: responsiveSize(26),
+      height: responsiveSize(26),
+    },
+    deleteAllBtn:{
+      padding:10
+    },
+    deleteAllContainer:{
+      justifyContent:'flex-end',
+      alignItems:'flex-end'
+    },
+    cartIsEmptyTxt:{
+      alignSelf:'center',
+      
+    }
     })
 
     const mapStateToProps = state => {
-      const { products  } = state.productsReducer;
+      const { products, totalAmount  } = state.productsReducer;
       return {
-        products
+        products,
+        totalAmount
       }
     }
     
     export default connect(
       mapStateToProps,
       {
- 
+        removeToCart,
+        removeAllCart,
+        addToCart
       }
     )(cart)

@@ -5,6 +5,8 @@ export const FETCH_CATEGORIES       = "fetch_categories";
 export const FETCH_SUB_CATEGORIES   = "fetch_sub_categories";
 export const FETCH_PRODUCTS         = "fetch_products";
 export const ADD_TO_CART            = "add_to_cart";
+export const REMOVE_TO_CART         = "remove_to_cart";
+export const REMOVE_ALL_CART        = "remove_all_cart";
 
 export const fetchCategories = (item) => {
     return dispatch => {
@@ -78,6 +80,20 @@ export const addToCart = (item) =>{
     console.log("ürün: ", item)
     return {
         type: ADD_TO_CART,
+        payload: item
+      };
+}
+export const removeToCart = (item) =>{
+    console.log("ürün: ", item)
+    return {
+        type: REMOVE_TO_CART,
+        payload: item
+      };
+}
+export const removeAllCart = (item) =>{
+    console.log("ürün: ", item)
+    return {
+        type: REMOVE_ALL_CART,
         payload: item
       };
 }
